@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Alexandria Metro — Official information portal for Egypt's Alexandria Metro Line 1. Trip planner, timetables, fares, and project news."/>
+<meta property="og:title" content="Alexandria Metro | مترو الإسكندرية"/>
+<meta property="og:description" content="Plan your trip, check fares, and explore the new Alexandria Metro."/>
+<title>Alexandria Metro | مترو الإسكندرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@400;600;700;800;900&family=Cairo:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════ */
+:root{
+  --bg:#04080f;
+  --bg2:#080d18;
+  --surface:#0d1424;
+  --surface2:#111c30;
+  --surface3:#16243d;
+  --border:#1a2840;
+  --border2:#223354;
+  --blue:#1a6bff;
+  --blue-light:#3d8bff;
+  --cyan:#00d4ff;
+  --cyan-dim:#00a8cc;
+  --gold:#f5c842;
+  --gold-dim:#c49a1e;
+  --green:#22d67a;
+  --red:#ff4757;
+  --text:#dde6f5;
+  --text2:#8fa3c4;
+  --text3:#4d6480;
+  --fn:'Barlow',sans-serif;
+  --fc:'Barlow Condensed',sans-serif;
+  --far:'Cairo',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+  --r:10px;
+  --r2:16px;
+  --nav-h:62px;
+  --shadow-blue:0 0 40px rgba(26,107,255,.15);
+  --shadow-cyan:0 0 40px rgba(0,212,255,.1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--fn);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+html[lang=ar] body{font-family:var(--far)}
+img{max-width:100%;display:block}
+button,select,input{font-family:inherit}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* Grain overlay */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:var(--nav-h);
+  background:rgba(4,8,15,.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;
+  padding:0 20px;
+  gap:0;
+}
+.nav-brand{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;color:var(--text);
+  flex-shrink:0;margin-right:auto;
+}
+html[dir=rtl] .nav-brand{margin-right:0;margin-left:auto}
+.nav-brand-mark{
+  width:38px;height:38px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fm);font-weight:700;font-size:15px;color:#fff;
+  letter-spacing:-1px;flex-shrink:0;
+}
+.nav-brand-text{line-height:1.1}
+.nav-brand-name{
+  font-family:var(--fc);font-weight:800;font-size:17px;
+  letter-spacing:.5px;
+}
+html[lang=ar] .nav-brand-name{font-family:var(--far);font-size:15px}
+.nav-brand-sub{font-family:var(--fm);font-size:9px;color:var(--text3);letter-spacing:2px}
+.nav-links{
+  display:flex;list-style:none;align-items:center;gap:2px;
+  margin-right:16px;
+}
+html[dir=rtl] .nav-links{margin-right:0;margin-left:16px}
+.nav-links a{
+  color:var(--text2);text-decoration:none;
+  padding:6px 12px;border-radius:7px;
+  font-size:13px;font-weight:600;letter-spacing:.2px;
+  transition:all .18s;white-space:nowrap;
+}
+.nav-links a:hover,.nav-links a.active{
+  color:var(--cyan);background:rgba(0,212,255,.07);
+}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.btn-lang{
+  background:var(--surface2);border:1px solid var(--border2);
+  color:var(--text2);padding:6px 13px;border-radius:7px;
+  font-size:12px;font-weight:700;cursor:pointer;
+  font-family:var(--fn);letter-spacing:.3px;
+  transition:all .18s;
+}
+.btn-lang:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn-book{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  border:none;color:#fff;padding:7px 16px;border-radius:7px;
+  font-size:12px;font-weight:700;cursor:pointer;
+  letter-spacing:.3px;transition:all .2s;white-space:nowrap;
+  box-shadow:0 2px 16px rgba(26,107,255,.35);
+}
+.btn-book:hover{transform:translateY(-1px);box-shadow:0 4px 24px rgba(26,107,255,.5)}
+.ham{
+  display:none;flex-direction:column;gap:4px;
+  background:none;border:none;cursor:pointer;padding:5px;
+  margin-left:8px;
+}
+html[dir=rtl] .ham{margin-left:0;margin-right:8px}
+.ham span{display:block;width:20px;height:2px;background:var(--text2);border-radius:2px;transition:all .25s}
+.mob-menu{
+  display:none;position:fixed;
+  top:var(--nav-h);left:0;right:0;z-index:999;
+  background:rgba(4,8,15,.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:12px 20px 16px;flex-direction:column;gap:2px;
+}
+.mob-menu.open{display:flex}
+.mob-menu a{
+  color:var(--text2);text-decoration:none;
+  padding:11px 14px;border-radius:8px;
+  font-size:15px;font-weight:600;transition:all .18s;
+}
+.mob-menu a:hover,.mob-menu a.active{color:var(--cyan);background:rgba(0,212,255,.07)}
+@media(max-width:860px){.nav-links{display:none}.ham{display:flex}}
+@media(max-width:560px){.btn-book{display:none}}
+
+/* ═══════════════════════════════════════════
+   PAGE SYSTEM
+═══════════════════════════════════════════ */
+.page{display:none;min-height:100vh;padding-top:var(--nav-h)}
+.page.active{display:block}
+.container{max-width:1140px;margin:0 auto;padding:0 22px}
+.section{padding:72px 0}
+.sec-tag{
+  font-family:var(--fm);font-size:10px;font-weight:700;
+  letter-spacing:3px;color:var(--cyan);margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.sec-tag::before{content:'';width:20px;height:2px;background:var(--cyan);flex-shrink:0}
+html[dir=rtl] .sec-tag{flex-direction:row-reverse}
+html[dir=rtl] .sec-tag::before{order:1}
+.sec-h{
+  font-family:var(--fc);font-size:clamp(28px,5vw,46px);
+  font-weight:800;line-height:1.05;letter-spacing:-.5px;
+  margin-bottom:14px;
+}
+html[lang=ar] .sec-h{font-family:var(--far);letter-spacing:0;font-size:clamp(24px,4vw,38px)}
+.sec-p{font-size:15px;color:var(--text2);line-height:1.75;max-width:520px}
+html[lang=ar] .sec-p{font-family:var(--far)}
+
+/* ═══════════════════════════════════════════
+   CARDS & SHARED COMPONENTS
+═══════════════════════════════════════════ */
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);padding:28px;
+}
+.card-sm{padding:20px}
+.glow-border{
+  position:relative;
+  background:var(--surface);border-radius:var(--r2);
+  border:1px solid var(--border);
+}
+.glow-border::before{
+  content:'';position:absolute;inset:-1px;border-radius:calc(var(--r2) + 1px);
+  background:linear-gradient(135deg,var(--blue),var(--cyan),transparent,transparent);
+  z-index:-1;opacity:0;transition:opacity .3s;
+}
+.glow-border:hover::before{opacity:1}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);
+  border-radius:100px;padding:4px 12px;
+  font-family:var(--fm);font-size:10px;font-weight:700;
+  color:var(--cyan);letter-spacing:.5px;
+}
+.pill-gold{background:rgba(245,200,66,.08);border-color:rgba(245,200,66,.2);color:var(--gold)}
+.pill-green{background:rgba(34,214,122,.08);border-color:rgba(34,214,122,.2);color:var(--green)}
+.pill-red{background:rgba(255,71,87,.08);border-color:rgba(255,71,87,.2);color:var(--red)}
+.dot-live{width:6px;height:6px;background:currentColor;border-radius:50%;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* BUTTONS */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border-radius:var(--r);font-size:14px;font-weight:700;
+  cursor:pointer;transition:all .2s;border:none;font-family:inherit;
+  letter-spacing:.2px;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;box-shadow:0 4px 20px rgba(26,107,255,.3);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(26,107,255,.5)}
+.btn-ghost{
+  background:transparent;color:var(--text2);
+  border:1px solid var(--border2);
+}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn-gold{background:var(--gold);color:#000}
+.btn-gold:hover{background:#ffe066;transform:translateY(-1px)}
+.btn-full{width:100%}
+.btn-sm{padding:8px 16px;font-size:12px}
+.btn-icon{padding:10px;border-radius:8px}
+
+/* FORMS */
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{
+  font-family:var(--fm);font-size:10px;font-weight:700;
+  letter-spacing:1.5px;color:var(--text3);
+}
+html[lang=ar] .form-label{font-family:var(--far);letter-spacing:0;font-size:11px}
+.form-ctrl{
+  background:var(--bg2);border:1px solid var(--border2);
+  color:var(--text);padding:11px 15px;border-radius:var(--r);
+  font-size:14px;font-family:inherit;outline:none;width:100%;
+  transition:border-color .2s;appearance:none;
+}
+html[lang=ar] .form-ctrl{font-family:var(--far)}
+.form-ctrl:focus{border-color:var(--cyan)}
+.form-ctrl::placeholder{color:var(--text3)}
+.sel-wrap{position:relative}
+.sel-wrap::after{
+  content:'▾';position:absolute;right:13px;top:50%;
+  transform:translateY(-50%);color:var(--text3);pointer-events:none;font-size:11px;
+}
+html[dir=rtl] .sel-wrap::after{right:auto;left:13px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.field-row{grid-template-columns:1fr}}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--border);margin:28px 0}
+
+/* ═══════════════════════════════════════════
+   ████  HOME PAGE  ████
+═══════════════════════════════════════════ */
+/* HERO */
+.hero{
+  min-height:calc(100vh - var(--nav-h));
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 30% 40%,rgba(26,107,255,.13) 0%,transparent 70%),
+    radial-gradient(ellipse 50% 40% at 75% 65%,rgba(0,212,255,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 50% at 85% 20%,rgba(245,200,66,.04) 0%,transparent 60%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(26,107,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(26,107,255,.04) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse 80% 80% at center,black 30%,transparent 100%);
+}
+/* Animated metro line decoration */
+.hero-line{
+  position:absolute;bottom:28%;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--cyan),transparent);
+  opacity:.15;
+}
+.hero-train{
+  position:absolute;bottom:calc(28% + 6px);
+  width:60px;height:14px;
+  background:linear-gradient(90deg,transparent,var(--cyan));
+  border-radius:2px;opacity:.5;
+  animation:trainMove 8s linear infinite;
+}
+@keyframes trainMove{
+  0%{left:-80px;opacity:0}
+  10%{opacity:.5}
+  90%{opacity:.5}
+  100%{left:calc(100% + 80px);opacity:0}
+}
+.hero-inner{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:1fr 420px;
+  gap:48px;align-items:center;
+  padding:60px 22px;max-width:1140px;margin:0 auto;width:100%;
+}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center}}
+html[dir=rtl] .hero-inner{direction:rtl}
+.hero-left{animation:fadeUp .7s ease both}
+.hero-badge{margin-bottom:20px}
+.hero-title{
+  font-family:var(--fc);font-size:clamp(44px,8vw,82px);
+  font-weight:900;line-height:1;letter-spacing:-2px;
+  margin-bottom:6px;
+}
+html[lang=ar] .hero-title{font-family:var(--far);letter-spacing:0;font-size:clamp(34px,6vw,62px);line-height:1.15}
+.hero-title-accent{
+  background:linear-gradient(90deg,var(--blue-light),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:32px;max-width:480px}
+html[lang=ar] .hero-sub{font-family:var(--far)}
+@media(max-width:900px){.hero-sub{margin:0 auto 32px}}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:900px){.hero-cta{justify-content:center}}
+.hero-right{animation:fadeUp .7s .15s ease both}
+@media(max-width:900px){.hero-right{display:none}}
+
+/* HERO CARD (right side) */
+.hero-card{
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:20px;padding:24px;
+  box-shadow:var(--shadow-blue);
+}
+.hero-card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;
+}
+.hero-card-title{font-family:var(--fm);font-size:11px;font-weight:700;color:var(--text3);letter-spacing:2px}
+.mini-line{
+  margin:20px 0;
+  display:flex;align-items:center;
+  position:relative;
+  padding:16px 0;
+}
+.mini-line::before{
+  content:'';position:absolute;left:8px;right:8px;top:50%;
+  height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));
+  border-radius:2px;transform:translateY(-50%);
+}
+.mini-stations{
+  display:flex;justify-content:space-between;
+  width:100%;position:relative;z-index:1;
+}
+.mini-st{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.mini-dot{
+  width:12px;height:12px;border-radius:50%;
+  background:var(--bg);border:2.5px solid var(--cyan);
+}
+.mini-st.terminal .mini-dot{background:var(--cyan)}
+.mini-label{
+  font-family:var(--fm);font-size:8px;color:var(--text3);
+  text-align:center;max-width:50px;line-height:1.3;
+}
+html[lang=ar] .mini-label{font-family:var(--far);font-size:7px}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.stat-box{
+  background:var(--surface2);border-radius:8px;padding:12px;text-align:center;
+}
+.stat-box-num{
+  font-family:var(--fm);font-size:20px;font-weight:700;
+  background:linear-gradient(135deg,var(--blue-light),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-box-lbl{font-size:9px;color:var(--text3);margin-top:2px;line-height:1.3}
+html[lang=ar] .stat-box-lbl{font-family:var(--far)}
+
+/* ANNOUNCEMENT BAR */
+.announce{
+  background:linear-gradient(90deg,rgba(26,107,255,.12),rgba(0,212,255,.08));
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:14px 22px;overflow:hidden;
+  display:flex;align-items:center;gap:16px;
+}
+.announce-label{
+  font-family:var(--fm);font-size:10px;font-weight:700;
+  color:var(--cyan);letter-spacing:2px;white-space:nowrap;flex-shrink:0;
+}
+.announce-ticker{
+  font-size:13px;color:var(--text2);
+  white-space:nowrap;overflow:hidden;
+  mask-image:linear-gradient(90deg,transparent,black 5%,black 95%,transparent);
+}
+html[dir=rtl] .announce-ticker{
+  mask-image:linear-gradient(270deg,transparent,black 5%,black 95%,transparent);
+}
+.ticker-inner{
+  display:inline-block;
+  animation:ticker 40s linear infinite;
+}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* FEATURES GRID */
+.feat-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:18px;margin-top:48px;
+}
+@media(max-width:800px){.feat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+.feat-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);padding:24px;
+  transition:all .25s;cursor:default;
+  position:relative;overflow:hidden;
+}
+.feat-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--cyan));
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;
+}
+html[dir=rtl] .feat-card::after{transform-origin:right}
+.feat-card:hover{border-color:rgba(0,212,255,.25);transform:translateY(-3px);box-shadow:var(--shadow-cyan)}
+.feat-card:hover::after{transform:scaleX(1)}
+.feat-icon{
+  width:46px;height:46px;border-radius:10px;
+  background:rgba(26,107,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:16px;
+}
+.feat-title{font-size:15px;font-weight:700;margin-bottom:7px}
+html[lang=ar] .feat-title{font-family:var(--far)}
+.feat-desc{font-size:13px;color:var(--text2);line-height:1.65}
+html[lang=ar] .feat-desc{font-family:var(--far)}
+
+/* PROJECT HIGHLIGHTS */
+.highlights{
+  background:var(--surface);border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);padding:56px 0;
+}
+.hl-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  margin-top:40px;
+}
+@media(max-width:700px){.hl-grid{grid-template-columns:repeat(2,1fr)}}
+.hl-item{text-align:center}
+.hl-num{
+  font-family:var(--fc);font-size:44px;font-weight:900;
+  background:linear-gradient(135deg,var(--blue-light),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:-1px;
+}
+.hl-label{font-size:12px;color:var(--text2);margin-top:4px;letter-spacing:.5px}
+html[lang=ar] .hl-label{font-family:var(--far);letter-spacing:0}
+
+/* QUICK ACCESS */
+.qa-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;margin-top:40px;
+}
+@media(max-width:800px){.qa-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:400px){.qa-grid{grid-template-columns:1fr}}
+.qa-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);padding:22px 18px;
+  text-align:center;cursor:pointer;
+  transition:all .22s;text-decoration:none;color:var(--text);
+}
+.qa-card:hover{border-color:var(--cyan);background:var(--surface2);transform:translateY(-3px);box-shadow:var(--shadow-cyan)}
+.qa-icon{font-size:30px;margin-bottom:10px}
+.qa-title{font-size:13px;font-weight:700;margin-bottom:4px}
+html[lang=ar] .qa-title{font-family:var(--far)}
+.qa-desc{font-size:11px;color:var(--text3)}
+html[lang=ar] .qa-desc{font-family:var(--far)}
+
+/* NEWS PREVIEW */
+.news-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  gap:18px;margin-top:40px;
+}
+@media(max-width:860px){.news-grid{grid-template-columns:1fr}}
+.news-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);overflow:hidden;cursor:pointer;
+  transition:all .22s;
+}
+.news-card:hover{border-color:rgba(0,212,255,.25);transform:translateY(-3px);box-shadow:var(--shadow-cyan)}
+.news-img{
+  height:180px;display:flex;align-items:center;justify-content:center;
+  font-size:48px;
+  background:var(--surface2);
+}
+.news-card.featured .news-img{height:220px}
+.news-body{padding:18px}
+.news-meta{
+  display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;
+}
+.news-tag{
+  font-family:var(--fm);font-size:9px;font-weight:700;
+  color:var(--cyan);letter-spacing:1px;
+  background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.15);
+  border-radius:100px;padding:2px 8px;
+}
+.news-date{font-family:var(--fm);font-size:10px;color:var(--text3)}
+.news-title{font-size:15px;font-weight:700;line-height:1.4;margin-bottom:6px}
+html[lang=ar] .news-title{font-family:var(--far)}
+.news-card:not(.featured) .news-title{font-size:13px}
+.news-excerpt{font-size:12px;color:var(--text2);line-height:1.6}
+html[lang=ar] .news-excerpt{font-family:var(--far)}
+
+/* HOME FOOTER */
+.home-footer{
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:48px 0 24px;
+}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:40px;margin-bottom:40px;
+}
+@media(max-width:800px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr}}
+.footer-brand-name{
+  font-family:var(--fc);font-size:22px;font-weight:900;
+  margin-bottom:10px;
+}
+.footer-brand-name span{color:var(--cyan)}
+.footer-brand-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:16px;max-width:260px}
+html[lang=ar] .footer-brand-desc{font-family:var(--far)}
+.footer-socials{display:flex;gap:8px}
+.social-btn{
+  width:34px;height:34px;border-radius:7px;
+  background:var(--surface2);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer;transition:all .18s;text-decoration:none;
+}
+.social-btn:hover{border-color:var(--cyan);background:rgba(0,212,255,.08)}
+.footer-col-title{
+  font-family:var(--fm);font-size:10px;font-weight:700;
+  letter-spacing:2px;color:var(--text3);margin-bottom:14px;
+}
+html[lang=ar] .footer-col-title{font-family:var(--far);letter-spacing:0;font-size:11px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-links a{
+  font-size:13px;color:var(--text2);text-decoration:none;transition:color .15s;
+}
+html[lang=ar] .footer-links a{font-family:var(--far)}
+.footer-links a:hover{color:var(--cyan)}
+.footer-bottom{
+  border-top:1px solid var(--border);padding-top:20px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.footer-copy{font-size:12px;color:var(--text3)}
+html[lang=ar] .footer-copy{font-family:var(--far)}
+
+/* ═══════════════════════════════════════════
+   ████  PLANNER PAGE  ████
+═══════════════════════════════════════════ */
+.planner-layout{
+  display:grid;grid-template-columns:360px 1fr;
+  gap:24px;padding:40px 22px 80px;
+  max-width:1140px;margin:0 auto;
+}
+@media(max-width:900px){.planner-layout{grid-template-columns:1fr}}
+.planner-panel{display:flex;flex-direction:column;gap:18px}
+.planner-result{min-height:300px}
+
+/* Nearest Station */
+.nearest-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);padding:22px;
+}
+.locate-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:12px;border-radius:var(--r);
+  background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);
+  color:var(--cyan);font-size:13px;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:all .2s;margin-top:12px;
+}
+.locate-btn:hover{background:rgba(0,212,255,.15)}
+.nearest-found{
+  display:none;margin-top:14px;
+  background:rgba(26,107,255,.07);border:1px solid rgba(26,107,255,.2);
+  border-radius:var(--r);padding:14px;
+}
+.nearest-found.show{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nf-icon{font-size:24px}
+.nf-info{flex:1}
+.nf-lbl{font-family:var(--fm);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:2px}
+html[lang=ar] .nf-lbl{font-family:var(--far);letter-spacing:0}
+.nf-name{font-size:16px;font-weight:800;color:var(--cyan)}
+html[lang=ar] .nf-name{font-family:var(--far)}
+.nf-dist{font-size:11px;color:var(--text3);margin-top:1px}
+.spinner{
+  width:16px;height:16px;border:2px solid rgba(0,212,255,.2);
+  border-top-color:var(--cyan);border-radius:50%;
+  animation:spin .7s linear infinite;display:none;
+}
+.spinner.on{display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Route card */
+.route-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);padding:22px;
+}
+.swap-row{
+  display:grid;grid-template-columns:1fr 40px 1fr;
+  gap:10px;align-items:end;margin-bottom:14px;
+}
+.swap-btn{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--surface2);border:1px solid var(--border2);
+  color:var(--text2);font-size:16px;cursor:pointer;
+  transition:all .2s;align-self:flex-end;
+}
+.swap-btn:hover{border-color:var(--cyan);color:var(--cyan);transform:rotate(180deg)}
+
+/* Result panel */
+.result-empty{
+  background:var(--surface);border:1px dashed var(--border2);
+  border-radius:var(--r2);padding:48px 24px;
+  text-align:center;
+}
+.result-empty-icon{font-size:40px;margin-bottom:12px}
+.result-empty-text{font-size:14px;color:var(--text3)}
+html[lang=ar] .result-empty-text{font-family:var(--far)}
+.result-box{
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:var(--r2);padding:24px;
+  display:none;animation:fadeUp .35s ease both;
+}
+.result-box.show{display:block}
+.result-head{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:12px;margin-bottom:22px;flex-wrap:wrap;
+}
+.result-route-name{font-size:17px;font-weight:800;line-height:1.3}
+html[lang=ar] .result-route-name{font-family:var(--far)}
+.result-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.chip{
+  background:var(--surface2);border:1px solid var(--border2);
+  border-radius:100px;padding:4px 12px;
+  font-family:var(--fm);font-size:11px;color:var(--cyan);font-weight:700;
+}
+/* Path visual */
+.path-list{display:flex;flex-direction:column}
+.path-stop{display:flex;gap:14px;align-items:flex-start}
+html[dir=rtl] .path-stop{flex-direction:row-reverse}
+.ps-track{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:22px}
+.ps-dot{
+  width:14px;height:14px;border-radius:50%;
+  border:2.5px solid var(--blue);background:var(--bg);flex-shrink:0;
+}
+.path-stop.start .ps-dot{background:var(--cyan);border-color:var(--cyan);width:18px;height:18px}
+.path-stop.end .ps-dot{background:var(--gold);border-color:var(--gold);width:18px;height:18px}
+.ps-line{width:2px;flex:1;min-height:28px;background:linear-gradient(to bottom,var(--blue),var(--blue-light));opacity:.4;margin:3px 0}
+.path-stop:last-child .ps-line{display:none}
+.ps-info{padding-bottom:20px;flex:1;padding-top:1px}
+.ps-name{font-size:14px;font-weight:700}
+html[lang=ar] .ps-name{font-family:var(--far)}
+.ps-hint{font-family:var(--fm);font-size:10px;color:var(--text3);margin-top:2px}
+html[lang=ar] .ps-hint{font-family:var(--far);letter-spacing:0}
+
+/* ═══════════════════════════════════════════
+   ████  TIMETABLE PAGE  ████
+═══════════════════════════════════════════ */
+.timetable-wrap{padding:40px 22px 80px;max-width:1140px;margin:0 auto}
+.tt-tabs{display:flex;gap:8px;margin:24px 0;flex-wrap:wrap}
+.tt-tab{
+  padding:9px 20px;border-radius:8px;font-size:13px;font-weight:700;
+  cursor:pointer;border:1px solid var(--border2);background:transparent;
+  color:var(--text2);transition:all .18s;font-family:inherit;
+}
+.tt-tab.active{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border-color:transparent;box-shadow:0 2px 14px rgba(26,107,255,.4)}
+.tt-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:640px){.tt-grid{grid-template-columns:1fr}}
+.tt-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+.tt-card-head{
+  padding:16px 20px;
+  background:var(--surface2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.tt-dir-icon{font-size:18px}
+.tt-dir-label{font-size:14px;font-weight:700}
+html[lang=ar] .tt-dir-label{font-family:var(--far)}
+.tt-table{width:100%;border-collapse:collapse}
+.tt-table th{
+  font-family:var(--fm);font-size:9px;font-weight:700;
+  letter-spacing:1.5px;color:var(--text3);
+  padding:10px 16px;text-align:left;
+  border-bottom:1px solid var(--border);background:var(--surface2);
+}
+html[dir=rtl] .tt-table th{text-align:right}
+.tt-table td{
+  padding:10px 16px;font-size:13px;
+  border-bottom:1px solid var(--border);
+}
+html[lang=ar] .tt-table td{font-family:var(--far)}
+.tt-table tr:last-child td{border-bottom:none}
+.tt-table tr:hover td{background:var(--surface2)}
+.tt-time{font-family:var(--fm);font-size:13px;font-weight:700;color:var(--cyan)}
+.tt-peak{font-size:9px;font-weight:700;color:var(--gold);font-family:var(--fm)}
+.tt-info-box{
+  background:rgba(245,200,66,.05);border:1px solid rgba(245,200,66,.15);
+  border-radius:var(--r);padding:14px 18px;margin:20px 0;
+  font-size:13px;color:var(--text2);line-height:1.6;
+  display:flex;gap:10px;align-items:flex-start;
+}
+html[lang=ar] .tt-info-box{font-family:var(--far)}
+.tt-info-box span:first-child{font-size:16px;flex-shrink:0;margin-top:1px}
+
+/* ═══════════════════════════════════════════
+   ████  FARES PAGE  ████
+═══════════════════════════════════════════ */
+.fares-wrap{padding:40px 22px 80px;max-width:1000px;margin:0 auto}
+.fare-calc-card{
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:20px;padding:32px;margin-top:32px;
+}
+.fare-result-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;margin-top:24px;
+}
+@media(max-width:600px){.fare-result-row{grid-template-columns:1fr}}
+.fare-box{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r2);padding:20px;text-align:center;
+  transition:all .2s;
+}
+.fare-box.highlight{
+  border-color:rgba(0,212,255,.35);
+  background:rgba(0,212,255,.05);
+  box-shadow:var(--shadow-cyan);
+}
+.fare-type{font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text3);margin-bottom:8px}
+html[lang=ar] .fare-type{font-family:var(--far);letter-spacing:0;font-size:11px}
+.fare-price{
+  font-family:var(--fc);font-size:36px;font-weight:900;
+  color:var(--cyan);letter-spacing:-1px;
+}
+.fare-currency{font-family:var(--fm);font-size:13px;color:var(--text3);margin-top:4px}
+.fare-savings{font-size:11px;color:var(--green);margin-top:6px;font-weight:600}
+html[lang=ar] .fare-savings{font-family:var(--far)}
+.fare-note{
+  font-size:12px;color:var(--text3);text-align:center;
+  margin-top:16px;line-height:1.6;
+}
+html[lang=ar] .fare-note{font-family:var(--far)}
+.pass-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;margin-top:40px;
+}
+@media(max-width:640px){.pass-grid{grid-template-columns:1fr}}
+.pass-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);padding:24px;text-align:center;
+  transition:all .22s;
+}
+.pass-card:hover{border-color:rgba(0,212,255,.3);transform:translateY(-3px)}
+.pass-card.popular{border-color:var(--gold);background:rgba(245,200,66,.03)}
+.pass-popular-badge{
+  font-family:var(--fm);font-size:9px;font-weight:700;
+  color:var(--gold);letter-spacing:1.5px;margin-bottom:12px;
+}
+.pass-name{font-size:16px;font-weight:800;margin-bottom:6px}
+html[lang=ar] .pass-name{font-family:var(--far)}
+.pass-price{
+  font-family:var(--fc);font-size:40px;font-weight:900;
+  color:var(--cyan);letter-spacing:-1px;margin:8px 0;
+}
+.pass-price-sub{font-size:11px;color:var(--text3)}
+.pass-feats{list-style:none;margin:16px 0;display:flex;flex-direction:column;gap:8px;text-align:left}
+html[dir=rtl] .pass-feats{text-align:right}
+.pass-feats li{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:7px}
+html[lang=ar] .pass-feats li{font-family:var(--far);flex-direction:row-reverse}
+.pass-feats li::before{content:'✓';color:var(--green);font-size:11px;flex-shrink:0}
+html[dir=rtl] .pass-feats li::before{order:1}
+
+/* ═══════════════════════════════════════════
+   ████  STATIONS PAGE  ████
+═══════════════════════════════════════════ */
+.stations-wrap{padding:40px 22px 80px;max-width:1140px;margin:0 auto}
+.st-filter-row{
+  display:flex;gap:10px;flex-wrap:wrap;
+  margin:24px 0;align-items:center;
+}
+.filter-btn{
+  padding:7px 16px;border-radius:100px;font-size:12px;font-weight:700;
+  border:1px solid var(--border2);background:transparent;
+  color:var(--text2);cursor:pointer;transition:all .18s;font-family:inherit;
+}
+.filter-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.st-search{
+  flex:1;max-width:280px;
+}
+.stations-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:14px;margin-top:8px;
+}
+.st-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);padding:18px;
+  transition:all .22s;cursor:pointer;
+}
+.st-card:hover{border-color:rgba(0,212,255,.3);transform:translateY(-2px);box-shadow:var(--shadow-cyan)}
+.st-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px}
+.st-num{
+  font-family:var(--fm);font-size:11px;font-weight:700;
+  color:var(--blue-light);background:rgba(26,107,255,.1);
+  border-radius:5px;padding:3px 7px;flex-shrink:0;
+}
+.st-name{font-size:15px;font-weight:800;margin-bottom:3px}
+html[lang=ar] .st-name{font-family:var(--far)}
+.st-name-ar{font-size:12px;color:var(--text2);font-family:var(--far)}
+html[lang=ar] .st-name-ar{font-family:var(--fn)}
+.st-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.st-tag{
+  font-size:9px;font-weight:700;font-family:var(--fm);
+  padding:3px 8px;border-radius:100px;
+  letter-spacing:.5px;
+}
+.st-tag-el{background:rgba(26,107,255,.1);color:var(--blue-light);border:1px solid rgba(26,107,255,.2)}
+.st-tag-gr{background:rgba(34,214,122,.1);color:var(--green);border:1px solid rgba(34,214,122,.2)}
+.st-tag-term{background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.2)}
+.st-facilities{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.fac-icon{font-size:14px;opacity:.7;title:attr(title)}
+.st-km{font-family:var(--fm);font-size:10px;color:var(--text3);margin-top:6px}
+
+/* ═══════════════════════════════════════════
+   ████  PROGRESS PAGE  ████
+═══════════════════════════════════════════ */
+.progress-wrap{padding:40px 22px 80px;max-width:1000px;margin:0 auto}
+.progress-overview{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:20px;margin:32px 0;
+}
+@media(max-width:640px){.progress-overview{grid-template-columns:1fr}}
+.prog-big{
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:var(--r2);padding:28px;
+}
+.prog-big-label{font-family:var(--fm);font-size:10px;letter-spacing:2px;color:var(--text3);margin-bottom:12px}
+html[lang=ar] .prog-big-label{font-family:var(--far);letter-spacing:0}
+.prog-pct{
+  font-family:var(--fc);font-size:64px;font-weight:900;
+  color:var(--cyan);line-height:1;letter-spacing:-2px;margin-bottom:12px;
+}
+.prog-bar-wrap{background:var(--border);border-radius:100px;height:8px;overflow:hidden;margin-bottom:8px}
+.prog-bar{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .8s cubic-bezier(.4,0,.2,1)}
+.prog-bar-lbl{font-size:12px;color:var(--text2)}
+html[lang=ar] .prog-bar-lbl{font-family:var(--far)}
+.milestones{margin-top:36px}
+.ms-title{font-size:18px;font-weight:700;margin-bottom:20px}
+html[lang=ar] .ms-title{font-family:var(--far)}
+.ms-list{display:flex;flex-direction:column;gap:0}
+.ms-item{display:flex;gap:18px;align-items:flex-start;padding-bottom:24px;position:relative}
+html[dir=rtl] .ms-item{flex-direction:row-reverse}
+.ms-item::before{
+  content:'';position:absolute;left:15px;top:26px;bottom:0;width:2px;
+  background:var(--border);
+}
+html[dir=rtl] .ms-item::before{left:auto;right:15px}
+.ms-item:last-child::before{display:none}
+.ms-dot{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;position:relative;z-index:1;
+}
+.ms-dot.done{background:var(--green);color:#000}
+.ms-dot.active{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff}
+.ms-dot.pending{background:var(--surface2);border:2px solid var(--border2);color:var(--text3)}
+.ms-body{flex:1;padding-top:4px}
+.ms-name{font-size:14px;font-weight:700;margin-bottom:3px}
+html[lang=ar] .ms-name{font-family:var(--far)}
+.ms-date{font-family:var(--fm);font-size:10px;color:var(--text3);margin-bottom:4px}
+.ms-desc{font-size:12px;color:var(--text2);line-height:1.6}
+html[lang=ar] .ms-desc{font-family:var(--far)}
+
+/* ═══════════════════════════════════════════
+   ████  MAP PAGE  ████
+═══════════════════════════════════════════ */
+.map-wrap{padding:40px 22px 80px;max-width:1140px;margin:0 auto}
+.map-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;margin-top:28px;
+}
+.map-svg-scroll{overflow-x:auto;padding:32px 24px}
+.map-legend{
+  display:flex;gap:20px;flex-wrap:wrap;
+  padding:16px 24px;border-top:1px solid var(--border);
+  background:var(--surface2);
+}
+.leg-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text2)}
+html[lang=ar] .leg-item{font-family:var(--far)}
+
+/* ═══════════════════════════════════════════
+   ████  NEWS PAGE  ████
+═══════════════════════════════════════════ */
+.news-wrap{padding:40px 22px 80px;max-width:1000px;margin:0 auto}
+.full-news-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:28px}
+.full-news-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);display:grid;
+  grid-template-columns:120px 1fr;overflow:hidden;
+  transition:all .22s;cursor:pointer;
+}
+@media(max-width:560px){.full-news-card{grid-template-columns:1fr}}
+.full-news-card:hover{border-color:rgba(0,212,255,.25);transform:translateX(4px)}
+html[dir=rtl] .full-news-card:hover{transform:translateX(-4px)}
+.fnc-img{
+  background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;font-size:36px;
+  min-height:100px;
+}
+@media(max-width:560px){.fnc-img{min-height:80px}}
+.fnc-body{padding:18px 20px}
+.fnc-title{font-size:15px;font-weight:700;margin-bottom:6px;line-height:1.4}
+html[lang=ar] .fnc-title{font-family:var(--far)}
+.fnc-text{font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:10px}
+html[lang=ar] .fnc-text{font-family:var(--far)}
+
+/* ═══════════════════════════════════════════
+   ████  CONTACT PAGE  ████
+═══════════════════════════════════════════ */
+.contact-wrap{padding:40px 22px 80px;max-width:1000px;margin:0 auto}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1.2fr;
+  gap:28px;margin-top:32px;
+}
+@media(max-width:700px){.contact-grid{grid-template-columns:1fr}}
+.contact-info-list{display:flex;flex-direction:column;gap:16px;margin-top:20px}
+.ci-item{display:flex;gap:14px;align-items:flex-start}
+html[dir=rtl] .ci-item{flex-direction:row-reverse}
+.ci-icon{
+  width:38px;height:38px;border-radius:8px;flex-shrink:0;
+  background:rgba(26,107,255,.1);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.ci-label{font-family:var(--fm);font-size:9px;color:var(--text3);letter-spacing:1.5px;margin-bottom:2px}
+html[lang=ar] .ci-label{font-family:var(--far);letter-spacing:0}
+.ci-value{font-size:13px;font-weight:600;color:var(--text)}
+html[lang=ar] .ci-value{font-family:var(--far)}
+.contact-form{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);padding:28px}
+.contact-form .form-group{margin-bottom:16px}
+.form-success{
+  display:none;text-align:center;padding:20px;
+  color:var(--green);font-size:15px;font-weight:600;
+}
+html[lang=ar] .form-success{font-family:var(--far)}
+.form-success.show{display:block}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS & UTILS
+═══════════════════════════════════════════ */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.err{color:var(--red);font-size:12px;margin-top:6px;display:none}
+.err.show{display:block}
+html[lang=ar] .err{font-family:var(--far)}
+.page-header{
+  padding:48px 22px 0;max-width:1140px;margin:0 auto;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav id="nav">
+  <a class="nav-brand" href="#" onclick="nav('home')">
+    <div class="nav-brand-mark">M</div>
+    <div class="nav-brand-text">
+      <div class="nav-brand-name" data-en="Alexandria Metro" data-ar="مترو الإسكندرية">Alexandria Metro</div>
+      <div class="nav-brand-sub">LINE 1 · PHASE 1 · 2026</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="active" onclick="nav('home',this)" data-en="Home" data-ar="الرئيسية">Home</a></li>
+    <li><a href="#" onclick="nav('planner',this)" data-en="Trip Planner" data-ar="خطط رحلتك">Trip Planner</a></li>
+    <li><a href="#" onclick="nav('timetable',this)" data-en="Timetable" data-ar="مواعيد القطارات">Timetable</a></li>
+    <li><a href="#" onclick="nav('fares',this)" data-en="Fares" data-ar="التعريفات">Fares</a></li>
+    <li><a href="#" onclick="nav('stations',this)" data-en="Stations" data-ar="المحطات">Stations</a></li>
+    <li><a href="#" onclick="nav('progress',this)" data-en="Progress" data-ar="التقدم">Progress</a></li>
+    <li><a href="#" onclick="nav('news',this)" data-en="News" data-ar="الأخبار">News</a></li>
+    <li><a href="#" onclick="nav('contact',this)" data-en="Contact" data-ar="تواصل معنا">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-lang" onclick="toggleLang()" id="lang-btn">عربي</button>
+    <button class="btn-book" onclick="nav('planner')" data-en="Plan Trip" data-ar="خطط رحلتك">Plan Trip</button>
+    <button class="ham" onclick="toggleMob()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a href="#" onclick="nav('home',this);toggleMob()" data-en="🏠 Home" data-ar="🏠 الرئيسية">🏠 Home</a>
+  <a href="#" onclick="nav('planner',this);toggleMob()" data-en="🗺 Trip Planner" data-ar="🗺 خطط رحلتك">🗺 Trip Planner</a>
+  <a href="#" onclick="nav('timetable',this);toggleMob()" data-en="🕐 Timetable" data-ar="🕐 مواعيد القطارات">🕐 Timetable</a>
+  <a href="#" onclick="nav('fares',this);toggleMob()" data-en="💳 Fares" data-ar="💳 التعريفات">💳 Fares</a>
+  <a href="#" onclick="nav('stations',this);toggleMob()" data-en="🚉 Stations" data-ar="🚉 المحطات">🚉 Stations</a>
+  <a href="#" onclick="nav('progress',this);toggleMob()" data-en="🏗 Progress" data-ar="🏗 التقدم">🏗 Progress</a>
+  <a href="#" onclick="nav('news',this);toggleMob()" data-en="📰 News" data-ar="📰 الأخبار">📰 News</a>
+  <a href="#" onclick="nav('contact',this);toggleMob()" data-en="📞 Contact" data-ar="📞 تواصل معنا">📞 Contact</a>
+</div>
+
+<!-- ═══════════════════════════════════════
+     HOME PAGE
+═══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-line"></div>
+    <div class="hero-train"></div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="pill"><span class="dot-live"></span><span data-en="UNDER CONSTRUCTION · OPENING 2026" data-ar="قيد الإنشاء · الافتتاح 2026">UNDER CONSTRUCTION · OPENING 2026</span></span>
+        </div>
+        <h1 class="hero-title">
+          <span class="hero-title-accent" data-en="Alexandria" data-ar="مترو">Alexandria</span><br>
+          <span data-en="Metro" data-ar="الإسكندرية">Metro</span>
+        </h1>
+        <p class="hero-sub" data-en="Egypt's second city gets its first electric metro. 20 stations, 21.7 km, zero emissions — transforming the way Alexandria moves." data-ar="تحصل المدينة الثانية في مصر على أول مترو كهربائي. 20 محطة، 21.7 كم، صفر انبعاثات — تحويل طريقة تنقل الإسكندرية.">Egypt's second city gets its first electric metro. 20 stations, 21.7 km, zero emissions — transforming the way Alexandria moves.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" onclick="nav('planner')" data-en="🗺 Plan Your Trip" data-ar="🗺 خطط رحلتك">🗺 Plan Your Trip</button>
+          <button class="btn btn-ghost" onclick="nav('map')" data-en="View Map" data-ar="عرض الخريطة">View Map</button>
+          <button class="btn btn-ghost" onclick="nav('fares')" data-en="Check Fares" data-ar="تحقق من التعريفات">Check Fares</button>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-card">
+          <div class="hero-card-head">
+            <div class="hero-card-title" data-en="LINE 1 — ABU QIR CORRIDOR" data-ar="الخط 1 — ممر أبو قير">LINE 1 — ABU QIR CORRIDOR</div>
+            <span class="pill pill-green"><span class="dot-live"></span><span data-en="ACTIVE" data-ar="نشط">ACTIVE</span></span>
+          </div>
+          <div class="mini-line">
+            <div class="mini-stations" id="heroMiniStations"></div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-box-num">21.7</div><div class="stat-box-lbl" data-en="km total" data-ar="كم إجمالي">km total</div></div>
+            <div class="stat-box"><div class="stat-box-num">20</div><div class="stat-box-lbl" data-en="stations" data-ar="محطة">stations</div></div>
+            <div class="stat-box"><div class="stat-box-num">25</div><div class="stat-box-lbl" data-en="min trip" data-ar="دقيقة رحلة">min trip</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="announce">
+    <div class="announce-label" data-en="LATEST" data-ar="آخر الأخبار">LATEST</div>
+    <div class="announce-ticker">
+      <span class="ticker-inner" id="tickerInner"></span>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHTS -->
+  <div class="highlights">
+    <div class="container">
+      <div class="sec-tag" data-en="KEY NUMBERS" data-ar="أرقام رئيسية">KEY NUMBERS</div>
+      <div class="hl-grid">
+        <div class="hl-item"><div class="hl-num">€1.3B</div><div class="hl-label" data-en="Total Investment" data-ar="إجمالي الاستثمار">Total Investment</div></div>
+        <div class="hl-item"><div class="hl-num">60K</div><div class="hl-label" data-en="Passengers/Hour" data-ar="راكب/ساعة">Passengers/Hour</div></div>
+        <div class="hl-item"><div class="hl-num">21</div><div class="hl-label" data-en="New Trains" data-ar="قطار جديد">New Trains</div></div>
+        <div class="hl-item"><div class="hl-num">43km</div><div class="hl-label" data-en="All 3 Phases" data-ar="جميع المراحل الثلاثة">All 3 Phases</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK ACCESS -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-tag" data-en="QUICK ACCESS" data-ar="وصول سريع">QUICK ACCESS</div>
+      <h2 class="sec-h" data-en="What Are You Looking For?" data-ar="ماذا تبحث عن؟">What Are You Looking For?</h2>
+      <div class="qa-grid">
+        <div class="qa-card" onclick="nav('planner')">
+          <div class="qa-icon">🗺</div>
+          <div class="qa-title" data-en="Trip Planner" data-ar="خطط رحلتك">Trip Planner</div>
+          <div class="qa-desc" data-en="Find your route using BFS" data-ar="ابحث عن مسارك">Find your route using BFS</div>
+        </div>
+        <div class="qa-card" onclick="nav('timetable')">
+          <div class="qa-icon">🕐</div>
+          <div class="qa-title" data-en="Timetable" data-ar="مواعيد القطارات">Timetable</div>
+          <div class="qa-desc" data-en="First & last train times" data-ar="أوقات أول وآخر قطار">First & last train times</div>
+        </div>
+        <div class="qa-card" onclick="nav('fares')">
+          <div class="qa-icon">💳</div>
+          <div class="qa-title" data-en="Fares & Tickets" data-ar="التعريفات والتذاكر">Fares & Tickets</div>
+          <div class="qa-desc" data-en="Calculate your fare" data-ar="احسب تعريفتك">Calculate your fare</div>
+        </div>
+        <div class="qa-card" onclick="nav('stations')">
+          <div class="qa-icon">🚉</div>
+          <div class="qa-title" data-en="Station Guide" data-ar="دليل المحطات">Station Guide</div>
+          <div class="qa-desc" data-en="All 20 stations & facilities" data-ar="جميع المحطات والمرافق">All 20 stations & facilities</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="sec-tag" data-en="WHY THE METRO" data-ar="لماذا المترو">WHY THE METRO</div>
+      <h2 class="sec-h" data-en="A City Transformed" data-ar="مدينة متحولة">A City Transformed</h2>
+      <p class="sec-p" data-en="The metro replaces the aging Abu Qir suburban railway with a high-capacity electric rapid transit system." data-ar="يحل المترو محل خط أبو قير القديم بنظام عبور سريع كهربائي عالي السعة.">The metro replaces the aging Abu Qir suburban railway with a high-capacity electric rapid transit system.</p>
+      <div class="feat-grid">
+        <div class="feat-card"><div class="feat-icon">⚡</div><div class="feat-title" data-en="Fully Electric" data-ar="كهربائي بالكامل">Fully Electric</div><div class="feat-desc" data-en="Zero direct emissions. Clean energy powering 189 railcars and 20 stations across 21.7 km." data-ar="صفر انبعاثات مباشرة. طاقة نظيفة تغذي 189 عربة و20 محطة على مسافة 21.7 كم.">Zero direct emissions. Clean energy powering 189 railcars across 21.7 km.</div></div>
+        <div class="feat-card"><div class="feat-icon">⏱</div><div class="feat-title" data-en="2.5 Min Headway" data-ar="2.5 دقيقة بين القطارات">2.5 Min Headway</div><div class="feat-desc" data-en="Trains every 2.5 minutes at peak hours, down from 10-minute intervals on the old railway." data-ar="قطار كل 2.5 دقيقة في أوقات الذروة، بدلاً من 10 دقائق في السكة الحديدة القديمة.">Trains every 2.5 minutes at peak, down from 10-minute intervals on the old railway.</div></div>
+        <div class="feat-card"><div class="feat-icon">🚄</div><div class="feat-title" data-en="Half Travel Time" data-ar="نصف وقت السفر">Half Travel Time</div><div class="feat-desc" data-en="End-to-end in 25 minutes instead of 50. Reliable, on-time, every time." data-ar="من طرف لطرف في 25 دقيقة بدلاً من 50. موثوق، في الوقت المحدد، دائماً.">End-to-end in 25 minutes instead of 50. Reliable, on-time, every time.</div></div>
+        <div class="feat-card"><div class="feat-icon">🏗</div><div class="feat-title" data-en="Elevated Design" data-ar="تصميم مرتفع">Elevated Design</div><div class="feat-desc" data-en="14 of 20 stations are elevated, removing dangerous level crossings and freeing up street space." data-ar="14 من 20 محطة مرتفعة، مما يزيل التقاطعات الخطيرة ويحرر مساحة الشارع.">14 of 20 stations elevated — removing dangerous crossings, freeing street space.</div></div>
+        <div class="feat-card"><div class="feat-icon">🇪🇬</div><div class="feat-title" data-en="Made in Egypt" data-ar="صنع في مصر">Made in Egypt</div><div class="feat-desc" data-en="All 21 trains manufactured by NERIC in East Port Said — building Egypt's rail industry." data-ar="جميع القطارات الـ21 مصنوعة من NERIC في بور سعيد الشرقية - بناء صناعة السكك الحديدية في مصر.">All 21 trains built by NERIC in East Port Said — building Egypt's rail industry.</div></div>
+        <div class="feat-card"><div class="feat-icon">🌍</div><div class="feat-title" data-en="International Backing" data-ar="دعم دولي">International Backing</div><div class="feat-desc" data-en="Financed by EIB, EBRD, AFD and AIIB — the highest standards of European engineering." data-ar="تموله EIB وEBRD وAFD وAIIB - أعلى معايير الهندسة الأوروبية.">Backed by EIB, EBRD, AFD, AIIB — European engineering standards throughout.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS PREVIEW -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="sec-tag" data-en="LATEST NEWS" data-ar="آخر الأخبار">LATEST NEWS</div>
+      <h2 class="sec-h" data-en="Project Updates" data-ar="تحديثات المشروع">Project Updates</h2>
+      <div class="news-grid" id="homeNewsGrid"></div>
+      <div style="margin-top:20px;text-align:center">
+        <button class="btn btn-ghost" onclick="nav('news')" data-en="View All News →" data-ar="عرض كل الأخبار ←">View All News →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="home-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name"><span>ALX</span> METRO</div>
+          <p class="footer-brand-desc" data-en="Official information portal for the Alexandria Metro Project. Phase 1 under construction, opening 2026." data-ar="البوابة الرسمية لمعلومات مشروع مترو الإسكندرية. المرحلة الأولى قيد الإنشاء، الافتتاح 2026.">Official information portal for the Alexandria Metro Project. Phase 1 under construction, opening 2026.</p>
+          <div class="footer-socials">
+            <a class="social-btn" href="#" title="Facebook">𝕗</a>
+            <a class="social-btn" href="#" title="X">𝕏</a>
+            <a class="social-btn" href="#" title="YouTube">▶</a>
+            <a class="social-btn" href="#" title="Instagram">◉</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title" data-en="SERVICES" data-ar="الخدمات">SERVICES</div>
+          <ul class="footer-links">
+            <li><a href="#" onclick="nav('planner')" data-en="Trip Planner" data-ar="خطط رحلتك">Trip Planner</a></li>
+            <li><a href="#" onclick="nav('timetable')" data-en="Timetable" data-ar="مواعيد القطارات">Timetable</a></li>
+            <li><a href="#" onclick="nav('fares')" data-en="Fares & Passes" data-ar="التعريفات والاشتراكات">Fares & Passes</a></li>
+            <li><a href="#" onclick="nav('stations')" data-en="Station Guide" data-ar="دليل المحطات">Station Guide</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title" data-en="PROJECT" data-ar="المشروع">PROJECT</div>
+          <ul class="footer-links">
+            <li><a href="#" onclick="nav('progress')" data-en="Construction Progress" data-ar="تقدم الإنشاء">Construction Progress</a></li>
+            <li><a href="#" onclick="nav('news')" data-en="News & Updates" data-ar="الأخبار والتحديثات">News & Updates</a></li>
+            <li><a href="#" onclick="nav('map')" data-en="Metro Map" data-ar="خريطة المترو">Metro Map</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title" data-en="CONTACT" data-ar="تواصل معنا">CONTACT</div>
+          <ul class="footer-links">
+            <li><a href="#" onclick="nav('contact')" data-en="Feedback" data-ar="تعليقات">Feedback</a></li>
+            <li><a href="tel:08008000" data-en="08008000 (Hotline)" data-ar="08008000 (خط ساخن)">08008000 (Hotline)</a></li>
+            <li><a href="mailto:info@alexmetro.eg" data-en="info@alexmetro.eg" data-ar="info@alexmetro.eg">info@alexmetro.eg</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy" data-en="© 2026 Alexandria Metro Authority. All rights reserved." data-ar="© 2026 هيئة مترو الإسكندرية. جميع الحقوق محفوظة.">© 2026 Alexandria Metro Authority. All rights reserved.</div>
+        <div style="display:flex;gap:16px">
+          <a href="#" style="font-size:12px;color:var(--text3);text-decoration:none" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a>
+          <a href="#" style="font-size:12px;color:var(--text3);text-decoration:none" data-en="Accessibility" data-ar="إمكانية الوصول">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TRIP PLANNER PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-planner">
+  <div class="page-header">
+    <div class="sec-tag" data-en="SMART ROUTING · BFS ALGORITHM" data-ar="توجيه ذكي · خوارزمية BFS">SMART ROUTING · BFS ALGORITHM</div>
+    <h1 class="sec-h" data-en="Trip Planner" data-ar="خطط رحلتك">Trip Planner</h1>
+    <p class="sec-p" data-en="Find your nearest station, select your destination, and get the shortest route instantly." data-ar="ابحث عن أقرب محطة، حدد وجهتك، واحصل على أقصر مسار فوراً.">Find your nearest station, select your destination, and get the shortest route instantly.</p>
+  </div>
+  <div class="planner-layout">
+    <div class="planner-panel">
+
+      <!-- Nearest station -->
+      <div class="nearest-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <div class="form-label" data-en="📍 NEAREST STATION" data-ar="📍 أقرب محطة">📍 NEAREST STATION</div>
+          <span class="pill pill-gold" style="font-size:9px" data-en="GPS" data-ar="GPS">GPS</span>
+        </div>
+        <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:4px" data-en="Tap to detect your location and find the closest metro station." data-ar="اضغط للكشف عن موقعك وإيجاد أقرب محطة مترو.">Tap to detect your location and find the closest metro station.</p>
+        <button class="locate-btn" onclick="findNearest()" id="locBtn">
+          <span>📡</span>
+          <span data-en="Detect My Location" data-ar="اكتشف موقعي">Detect My Location</span>
+          <div class="spinner" id="locSpinner"></div>
+        </button>
+        <div class="err" id="locErr"></div>
+        <div class="nearest-found" id="nearestFound">
+          <div class="nf-icon">📍</div>
+          <div class="nf-info">
+            <div class="nf-lbl" data-en="NEAREST STATION" data-ar="أقرب محطة">NEAREST STATION</div>
+            <div class="nf-name" id="nfName">—</div>
+            <div class="nf-dist" id="nfDist">—</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="useNearest()" data-en="Use as Start →" data-ar="← استخدم كبداية">Use as Start →</button>
+        </div>
+      </div>
+
+      <!-- Route form -->
+      <div class="route-card">
+        <div class="form-label" style="margin-bottom:14px" data-en="🗺 PLAN ROUTE" data-ar="🗺 خطط المسار">🗺 PLAN ROUTE</div>
+        <div class="swap-row">
+          <div class="form-group">
+            <label class="form-label" data-en="FROM" data-ar="من">FROM</label>
+            <div class="sel-wrap"><select class="form-ctrl" id="selFrom"></select></div>
+          </div>
+          <button class="swap-btn" onclick="swapSt()" title="Swap">⇄</button>
+          <div class="form-group">
+            <label class="form-label" data-en="TO" data-ar="إلى">TO</label>
+            <div class="sel-wrap"><select class="form-ctrl" id="selTo"></select></div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="planRoute()" data-en="Find Shortest Route" data-ar="ابحث عن أقصر مسار">Find Shortest Route</button>
+        <div class="err" id="routeErr"></div>
+      </div>
+
+      <!-- Fare quick preview -->
+      <div class="card" id="routeFarePreview" style="display:none">
+        <div class="form-label" data-en="💳 ESTIMATED FARE" data-ar="💳 التعريفة المقدرة">💳 ESTIMATED FARE</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+          <div style="text-align:center;padding:12px;background:var(--surface2);border-radius:8px">
+            <div style="font-family:var(--fm);font-size:9px;color:var(--text3);margin-bottom:4px" data-en="SINGLE" data-ar="ذهاب">SINGLE</div>
+            <div style="font-family:var(--fc);font-size:24px;font-weight:800;color:var(--cyan)" id="fareS">—</div>
+            <div style="font-size:10px;color:var(--text3)" data-en="EGP" data-ar="جنيه">EGP</div>
+          </div>
+          <div style="text-align:center;padding:12px;background:var(--surface2);border-radius:8px">
+            <div style="font-family:var(--fm);font-size:9px;color:var(--text3);margin-bottom:4px" data-en="RETURN" data-ar="ذهاب وإياب">RETURN</div>
+            <div style="font-family:var(--fc);font-size:24px;font-weight:800;color:var(--gold)" id="fareR">—</div>
+            <div style="font-size:10px;color:var(--text3)" data-en="EGP" data-ar="جنيه">EGP</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /panel -->
+
+    <!-- RESULT -->
+    <div class="planner-result">
+      <div class="result-empty" id="resultEmpty">
+        <div class="result-empty-icon">🚇</div>
+        <div class="result-empty-text" data-en="Your route will appear here. Select start and destination stations to begin." data-ar="سيظهر مسارك هنا. حدد محطتي البداية والنهاية للبدء.">Your route will appear here. Select start and destination stations to begin.</div>
+      </div>
+      <div class="result-box" id="resultBox">
+        <div class="result-head">
+          <div>
+            <div class="result-route-name" id="routeName">—</div>
+            <div class="result-chips" id="routeChips"></div>
+          </div>
+        </div>
+        <div class="path-list" id="pathList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TIMETABLE PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-timetable">
+  <div class="page-header">
+    <div class="sec-tag" data-en="SCHEDULES" data-ar="الجداول الزمنية">SCHEDULES</div>
+    <h1 class="sec-h" data-en="Train Timetable" data-ar="مواعيد القطارات">Train Timetable</h1>
+    <p class="sec-p" data-en="First and last trains, peak and off-peak frequencies for Line 1." data-ar="أوقات أول وآخر قطار، والترددات في أوقات الذروة وغيرها للخط الأول.">First and last trains, peak and off-peak frequencies for Line 1.</p>
+  </div>
+  <div class="timetable-wrap">
+    <div class="tt-info-box">
+      <span>ℹ️</span>
+      <span data-en="Timetable below is based on the planned operational schedule for Line 1. Actual times may vary upon opening. Sign up for notifications to receive updates." data-ar="الجدول الزمني أدناه مبني على الجدول التشغيلي المخطط للخط الأول. قد تختلف الأوقات الفعلية عند الافتتاح.">Timetable below is based on the planned operational schedule for Line 1. Times may vary upon opening.</span>
+    </div>
+    <div class="tt-tabs">
+      <button class="tt-tab active" onclick="showTT('weekday',this)" data-en="Weekdays" data-ar="أيام الأسبوع">Weekdays</button>
+      <button class="tt-tab" onclick="showTT('friday',this)" data-en="Friday" data-ar="الجمعة">Friday</button>
+      <button class="tt-tab" onclick="showTT('weekend',this)" data-en="Saturday–Sunday" data-ar="السبت–الأحد">Saturday–Sunday</button>
+    </div>
+    <div class="tt-grid" id="ttGrid"></div>
+    <div style="margin-top:32px">
+      <div class="sec-tag" style="margin-bottom:12px" data-en="SERVICE FREQUENCY" data-ar="تردد الخدمة">SERVICE FREQUENCY</div>
+      <div class="tt-grid">
+        <div class="tt-card">
+          <div class="tt-card-head">
+            <span class="tt-dir-icon">⚡</span>
+            <div class="tt-dir-label" data-en="Peak Hours (06:00–09:00 · 15:00–19:00)" data-ar="أوقات الذروة (06:00–09:00 · 15:00–19:00)">Peak Hours (06:00–09:00 · 15:00–19:00)</div>
+          </div>
+          <table class="tt-table">
+            <thead><tr><th data-en="Day" data-ar="اليوم">Day</th><th data-en="Headway" data-ar="الفاصل الزمني">Headway</th><th data-en="Trains/Hour" data-ar="قطار/ساعة">Trains/Hour</th></tr></thead>
+            <tbody>
+              <tr><td data-en="Mon–Thu" data-ar="الاثنين–الخميس">Mon–Thu</td><td class="tt-time">2.5 <span class="tt-peak" data-en="min" data-ar="د">min</span></td><td>24</td></tr>
+              <tr><td data-en="Friday" data-ar="الجمعة">Friday</td><td class="tt-time">3 <span class="tt-peak" data-en="min" data-ar="د">min</span></td><td>20</td></tr>
+              <tr><td data-en="Sat–Sun" data-ar="السبت–الأحد">Sat–Sun</td><td class="tt-time">5 <span class="tt-peak" data-en="min" data-ar="د">min</span></td><td>12</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tt-card">
+          <div class="tt-card-head">
+            <span class="tt-dir-icon">🌙</span>
+            <div class="tt-dir-label" data-en="Off-Peak Hours (09:00–15:00 · 19:00–23:00)" data-ar="خارج الذروة (09:00–15:00 · 19:00–23:00)">Off-Peak Hours</div>
+          </div>
+          <table class="tt-table">
+            <thead><tr><th data-en="Day" data-ar="اليوم">Day</th><th data-en="Headway" data-ar="الفاصل الزمني">Headway</th><th data-en="Trains/Hour" data-ar="قطار/ساعة">Trains/Hour</th></tr></thead>
+            <tbody>
+              <tr><td data-en="Mon–Thu" data-ar="الاثنين–الخميس">Mon–Thu</td><td class="tt-time">5 <span class="tt-peak" data-en="min" data-ar="د">min</span></td><td>12</td></tr>
+              <tr><td data-en="Friday" data-ar="الجمعة">Friday</td><td class="tt-time">6 <span class="tt-peak" data-en="min" data-ar="د">min</span></td><td>10</td></tr>
+              <tr><td data-en="Sat–Sun" data-ar="السبت–الأحد">Sat–Sun</td><td class="tt-time">8 <span class="tt-peak" data-en="min" data-ar="د">min</span></td><td>7</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     FARES PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-fares">
+  <div class="page-header">
+    <div class="sec-tag" data-en="PRICING" data-ar="التسعير">PRICING</div>
+    <h1 class="sec-h" data-en="Fares & Tickets" data-ar="التعريفات والتذاكر">Fares & Tickets</h1>
+    <p class="sec-p" data-en="Calculate your fare, compare ticket types, and choose the best pass for your needs." data-ar="احسب تعريفتك، وقارن أنواع التذاكر، واختر أفضل اشتراك لاحتياجاتك.">Calculate your fare, compare ticket types, and choose the best pass for your needs.</p>
+  </div>
+  <div class="fares-wrap">
+    <!-- Fare Calculator -->
+    <div style="margin-top:12px">
+      <div class="sec-tag" data-en="FARE CALCULATOR" data-ar="حاسبة التعريفة">FARE CALCULATOR</div>
+    </div>
+    <div class="fare-calc-card">
+      <div class="field-row" style="margin-bottom:16px">
+        <div class="form-group">
+          <label class="form-label" data-en="FROM STATION" data-ar="من محطة">FROM STATION</label>
+          <div class="sel-wrap"><select class="form-ctrl" id="fFrom"></select></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-en="TO STATION" data-ar="إلى محطة">TO STATION</label>
+          <div class="sel-wrap"><select class="form-ctrl" id="fTo"></select></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="calcFare()" data-en="Calculate Fare" data-ar="احسب التعريفة">Calculate Fare</button>
+      <div class="err" id="fareErr"></div>
+      <div class="fare-result-row" id="fareResultRow" style="display:none">
+        <div class="fare-box" id="fb1">
+          <div class="fare-type" data-en="SINGLE JOURNEY" data-ar="رحلة واحدة">SINGLE JOURNEY</div>
+          <div class="fare-price" id="fp1">—</div>
+          <div class="fare-currency" data-en="Egyptian Pounds" data-ar="جنيه مصري">Egyptian Pounds</div>
+        </div>
+        <div class="fare-box highlight" id="fb2">
+          <div class="fare-type" data-en="RETURN TICKET" data-ar="ذهاب وإياب">RETURN TICKET</div>
+          <div class="fare-price" id="fp2">—</div>
+          <div class="fare-currency" data-en="Egyptian Pounds" data-ar="جنيه مصري">Egyptian Pounds</div>
+          <div class="fare-savings" id="fp2s"></div>
+        </div>
+        <div class="fare-box" id="fb3">
+          <div class="fare-type" data-en="10-TRIP BUNDLE" data-ar="باقة 10 رحلات">10-TRIP BUNDLE</div>
+          <div class="fare-price" id="fp3">—</div>
+          <div class="fare-currency" data-en="Egyptian Pounds" data-ar="جنيه مصري">Egyptian Pounds</div>
+          <div class="fare-savings" id="fp3s"></div>
+        </div>
+      </div>
+      <div class="fare-note" id="fareNote" style="display:none" data-en="* Fares are indicative estimates based on planned pricing structure. Final fares will be announced before opening." data-ar="* التعريفات تقديرية مبنية على هيكل التسعير المخطط. ستُعلن التعريفات النهائية قبل الافتتاح.">* Fares are indicative estimates. Final fares will be announced before opening.</div>
+    </div>
+
+    <!-- Passes -->
+    <div style="margin-top:40px">
+      <div class="sec-tag" data-en="TRAVEL PASSES" data-ar="اشتراكات السفر">TRAVEL PASSES</div>
+      <h2 class="sec-h" style="font-size:clamp(22px,3vw,32px)" data-en="Save More, Travel More" data-ar="وفر أكثر، سافر أكثر">Save More, Travel More</h2>
+    </div>
+    <div class="pass-grid">
+      <div class="pass-card">
+        <div class="pass-name" data-en="Day Pass" data-ar="تذكرة يومية">Day Pass</div>
+        <div class="pass-price">35</div>
+        <div class="pass-price-sub" data-en="EGP / day" data-ar="جنيه / يوم">EGP / day</div>
+        <ul class="pass-feats">
+          <li data-en="Unlimited trips for 24 hours" data-ar="رحلات غير محدودة لمدة 24 ساعة">Unlimited trips for 24 hours</li>
+          <li data-en="All 20 stations included" data-ar="جميع المحطات الـ20 مشمولة">All 20 stations included</li>
+          <li data-en="Valid from first use" data-ar="صالحة من أول استخدام">Valid from first use</li>
+        </ul>
+        <button class="btn btn-ghost btn-full btn-sm" data-en="Learn More" data-ar="اعرف المزيد">Learn More</button>
+      </div>
+      <div class="pass-card popular">
+        <div class="pass-popular-badge" data-en="⭐ MOST POPULAR" data-ar="⭐ الأكثر شعبية">⭐ MOST POPULAR</div>
+        <div class="pass-name" data-en="Monthly Pass" data-ar="اشتراك شهري">Monthly Pass</div>
+        <div class="pass-price">350</div>
+        <div class="pass-price-sub" data-en="EGP / month" data-ar="جنيه / شهر">EGP / month</div>
+        <ul class="pass-feats">
+          <li data-en="Unlimited trips for 30 days" data-ar="رحلات غير محدودة لمدة 30 يوماً">Unlimited trips for 30 days</li>
+          <li data-en="All stations, any time" data-ar="جميع المحطات، في أي وقت">All stations, any time</li>
+          <li data-en="~50% savings vs daily tickets" data-ar="~50% توفير مقارنة بالتذاكر اليومية">~50% savings vs daily tickets</li>
+          <li data-en="Transferable to smart card" data-ar="قابلة للتحويل إلى بطاقة ذكية">Transferable to smart card</li>
+        </ul>
+        <button class="btn btn-gold btn-full btn-sm" data-en="Get Monthly Pass" data-ar="احصل على الاشتراك الشهري">Get Monthly Pass</button>
+      </div>
+      <div class="pass-card">
+        <div class="pass-name" data-en="Annual Pass" data-ar="اشتراك سنوي">Annual Pass</div>
+        <div class="pass-price">3000</div>
+        <div class="pass-price-sub" data-en="EGP / year" data-ar="جنيه / سنة">EGP / year</div>
+        <ul class="pass-feats">
+          <li data-en="Unlimited trips for 365 days" data-ar="رحلات غير محدودة لمدة 365 يوماً">Unlimited trips for 365 days</li>
+          <li data-en="Priority boarding" data-ar="صعود ذو أولوية">Priority boarding</li>
+          <li data-en="~28% savings vs monthly" data-ar="~28% توفير مقارنة بالشهري">~28% savings vs monthly</li>
+          <li data-en="Dedicated customer support" data-ar="دعم عملاء مخصص">Dedicated customer support</li>
+        </ul>
+        <button class="btn btn-ghost btn-full btn-sm" data-en="Learn More" data-ar="اعرف المزيد">Learn More</button>
+      </div>
+    </div>
+    <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:20px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">♿</span>
+          <div><div style="font-size:13px;font-weight:700" data-en="Disability Discount" data-ar="خصم ذوي الإعاقة">Disability Discount</div><div style="font-size:11px;color:var(--text2)" data-en="50% off all ticket types" data-ar="خصم 50% على جميع أنواع التذاكر">50% off all ticket types</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">🎓</span>
+          <div><div style="font-size:13px;font-weight:700" data-en="Student Discount" data-ar="خصم الطلاب">Student Discount</div><div style="font-size:11px;color:var(--text2)" data-en="30% off with valid student ID" data-ar="خصم 30% ببطاقة طالب سارية">30% off with valid student ID</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">👴</span>
+          <div><div style="font-size:13px;font-weight:700" data-en="Senior Discount" data-ar="خصم كبار السن">Senior Discount</div><div style="font-size:11px;color:var(--text2)" data-en="40% off for ages 65+" data-ar="خصم 40% لمن هم 65 عاماً فأكثر">40% off for ages 65+</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">👶</span>
+          <div><div style="font-size:13px;font-weight:700" data-en="Children Free" data-ar="الأطفال مجاناً">Children Free</div><div style="font-size:11px;color:var(--text2)" data-en="Under 6 travel free" data-ar="أقل من 6 سنوات يسافرون مجاناً">Under 6 travel free</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     STATIONS PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-stations">
+  <div class="page-header">
+    <div class="sec-tag" data-en="LINE 1 STATIONS" data-ar="محطات الخط 1">LINE 1 STATIONS</div>
+    <h1 class="sec-h" data-en="Station Guide" data-ar="دليل المحطات">Station Guide</h1>
+    <p class="sec-p" data-en="All 20 stations from Misr to Abu Qir — facilities, type, and km marker." data-ar="جميع المحطات الـ20 من مصر إلى أبو قير — المرافق والنوع وعلامة الكيلومترات.">All 20 stations from Misr to Abu Qir — facilities, type, and km marker.</p>
+  </div>
+  <div class="stations-wrap">
+    <div class="st-filter-row">
+      <button class="filter-btn active" onclick="filterSt('all',this)" data-en="All Stations" data-ar="جميع المحطات">All Stations</button>
+      <button class="filter-btn" onclick="filterSt('ground',this)" data-en="Ground Level" data-ar="على مستوى الأرض">Ground Level</button>
+      <button class="filter-btn" onclick="filterSt('elevated',this)" data-en="Elevated" data-ar="مرتفعة">Elevated</button>
+      <input class="form-ctrl st-search" id="stSearch" type="text" placeholder="Search stations..." oninput="searchSt(this.value)" style="max-width:240px"/>
+    </div>
+    <div class="stations-grid" id="stationsGrid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PROGRESS PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-progress">
+  <div class="page-header">
+    <div class="sec-tag" data-en="CONSTRUCTION UPDATE" data-ar="تحديث الإنشاء">CONSTRUCTION UPDATE</div>
+    <h1 class="sec-h" data-en="Project Progress" data-ar="تقدم المشروع">Project Progress</h1>
+    <p class="sec-p" data-en="Live updates on construction milestones, civil works, and station development." data-ar="تحديثات مباشرة حول إنجازات البناء والأعمال المدنية وتطوير المحطات.">Live updates on construction milestones, civil works, and station development.</p>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-overview">
+      <div class="prog-big">
+        <div class="prog-big-label" data-en="OVERALL COMPLETION — PHASE 1" data-ar="الاكتمال الإجمالي — المرحلة الأولى">OVERALL COMPLETION — PHASE 1</div>
+        <div class="prog-pct">68%</div>
+        <div class="prog-bar-wrap"><div class="prog-bar" style="width:68%"></div></div>
+        <div class="prog-bar-lbl" data-en="On track for 2026 opening" data-ar="في المسار الصحيح للافتتاح 2026">On track for 2026 opening</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="prog-big" style="padding:18px">
+          <div class="prog-big-label" data-en="CIVIL WORKS" data-ar="الأعمال المدنية">CIVIL WORKS</div>
+          <div style="display:flex;align-items:center;gap:12px;margin:8px 0">
+            <div class="prog-bar-wrap" style="flex:1;margin:0"><div class="prog-bar" style="width:82%"></div></div>
+            <div style="font-family:var(--fm);font-size:14px;font-weight:700;color:var(--cyan);flex-shrink:0">82%</div>
+          </div>
+        </div>
+        <div class="prog-big" style="padding:18px">
+          <div class="prog-big-label" data-en="ELECTRIFICATION" data-ar="الكهربة">ELECTRIFICATION</div>
+          <div style="display:flex;align-items:center;gap:12px;margin:8px 0">
+            <div class="prog-bar-wrap" style="flex:1;margin:0"><div class="prog-bar" style="width:45%"></div></div>
+            <div style="font-family:var(--fm);font-size:14px;font-weight:700;color:var(--cyan);flex-shrink:0">45%</div>
+          </div>
+        </div>
+        <div class="prog-big" style="padding:18px">
+          <div class="prog-big-label" data-en="STATION FITOUT" data-ar="تجهيز المحطات">STATION FITOUT</div>
+          <div style="display:flex;align-items:center;gap:12px;margin:8px 0">
+            <div class="prog-bar-wrap" style="flex:1;margin:0"><div class="prog-bar" style="width:38%"></div></div>
+            <div style="font-family:var(--fm);font-size:14px;font-weight:700;color:var(--cyan);flex-shrink:0">38%</div>
+          </div>
+        </div>
+        <div class="prog-big" style="padding:18px">
+          <div class="prog-big-label" data-en="ROLLING STOCK" data-ar="المركبات">ROLLING STOCK</div>
+          <div style="display:flex;align-items:center;gap:12px;margin:8px 0">
+            <div class="prog-bar-wrap" style="flex:1;margin:0"><div class="prog-bar" style="width:25%"></div></div>
+            <div style="font-family:var(--fm);font-size:14px;font-weight:700;color:var(--cyan);flex-shrink:0">25%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Milestones -->
+    <div class="milestones">
+      <div class="ms-title" data-en="Construction Milestones" data-ar="إنجازات البناء">Construction Milestones</div>
+      <div class="ms-list" id="milestoneList"></div>
+    </div>
+    <!-- Phase Overview -->
+    <div style="margin-top:40px">
+      <div class="sec-tag" data-en="ALL THREE PHASES" data-ar="المراحل الثلاثة">ALL THREE PHASES</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px" id="phaseCards"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MAP PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-map">
+  <div class="page-header">
+    <div class="sec-tag" data-en="NETWORK MAP" data-ar="خريطة الشبكة">NETWORK MAP</div>
+    <h1 class="sec-h" data-en="Metro Map" data-ar="خريطة المترو">Metro Map</h1>
+    <p class="sec-p" data-en="Line 1: Abu Qir to Misr Station, 21.7 km, 20 stations." data-ar="الخط 1: من أبو قير إلى محطة مصر، 21.7 كم، 20 محطة.">Line 1: Abu Qir to Misr Station, 21.7 km, 20 stations.</p>
+  </div>
+  <div class="map-wrap">
+    <div class="map-box">
+      <div class="map-svg-scroll" id="mapSvgWrap"></div>
+      <div class="map-legend">
+        <div class="leg-item"><div style="width:11px;height:11px;background:var(--cyan);border-radius:50%"></div><span data-en="Terminal" data-ar="محطة طرفية">Terminal</span></div>
+        <div class="leg-item"><div style="width:9px;height:9px;background:var(--bg);border:2px solid var(--cyan);border-radius:50%"></div><span data-en="Ground Level" data-ar="مستوى الأرض">Ground Level</span></div>
+        <div class="leg-item"><div style="width:9px;height:9px;background:rgba(26,107,255,.2);border:2px solid var(--blue-light);border-radius:50%"></div><span data-en="Elevated" data-ar="مرتفعة">Elevated</span></div>
+        <div class="leg-item" style="margin-left:auto"><span class="pill" style="font-size:9px" data-en="Scroll horizontally →" data-ar="اسحب أفقياً ←">Scroll horizontally →</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     NEWS PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-news">
+  <div class="page-header">
+    <div class="sec-tag" data-en="LATEST UPDATES" data-ar="آخر التحديثات">LATEST UPDATES</div>
+    <h1 class="sec-h" data-en="News & Updates" data-ar="الأخبار والتحديثات">News & Updates</h1>
+    <p class="sec-p" data-en="Stay informed with the latest developments from the Alexandria Metro project." data-ar="ابق على اطلاع بآخر المستجدات من مشروع مترو الإسكندرية.">Stay informed with the latest developments from the Alexandria Metro project.</p>
+  </div>
+  <div class="news-wrap">
+    <div class="full-news-grid" id="fullNewsGrid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     CONTACT PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="page-header">
+    <div class="sec-tag" data-en="GET IN TOUCH" data-ar="تواصل معنا">GET IN TOUCH</div>
+    <h1 class="sec-h" data-en="Contact Us" data-ar="تواصل معنا">Contact Us</h1>
+    <p class="sec-p" data-en="Have a question or feedback? Reach out to the Alexandria Metro team." data-ar="هل لديك سؤال أو تعليق؟ تواصل مع فريق مترو الإسكندرية.">Have a question or feedback? Reach out to the Alexandria Metro team.</p>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-grid">
+      <div>
+        <div class="card" style="margin-bottom:20px">
+          <div class="form-label" style="margin-bottom:16px" data-en="CONTACT INFORMATION" data-ar="معلومات الاتصال">CONTACT INFORMATION</div>
+          <div class="contact-info-list">
+            <div class="ci-item"><div class="ci-icon">📞</div><div><div class="ci-label" data-en="HOTLINE" data-ar="خط ساخن">HOTLINE</div><div class="ci-value">08008000</div></div></div>
+            <div class="ci-item"><div class="ci-icon">✉️</div><div><div class="ci-label" data-en="EMAIL" data-ar="البريد الإلكتروني">EMAIL</div><div class="ci-value">info@alexmetro.eg</div></div></div>
+            <div class="ci-item"><div class="ci-icon">🏛</div><div><div class="ci-label" data-en="AUTHORITY" data-ar="الجهة">AUTHORITY</div><div class="ci-value" data-en="National Authority for Tunnels (NAT)" data-ar="الهيئة القومية للأنفاق">National Authority for Tunnels (NAT)</div></div></div>
+            <div class="ci-item"><div class="ci-icon">📍</div><div><div class="ci-label" data-en="ADDRESS" data-ar="العنوان">ADDRESS</div><div class="ci-value" data-en="Alexandria, Egypt" data-ar="الإسكندرية، مصر">Alexandria, Egypt</div></div></div>
+            <div class="ci-item"><div class="ci-icon">⏰</div><div><div class="ci-label" data-en="OFFICE HOURS" data-ar="ساعات العمل">OFFICE HOURS</div><div class="ci-value" data-en="Sun–Thu: 9:00 AM – 5:00 PM" data-ar="الأحد–الخميس: 9:00 ص – 5:00 م">Sun–Thu: 9:00 AM – 5:00 PM</div></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="form-label" style="margin-bottom:12px" data-en="FOLLOW US" data-ar="تابعنا">FOLLOW US</div>
+          <div class="footer-socials">
+            <a class="social-btn" href="#" title="Facebook">𝕗</a>
+            <a class="social-btn" href="#" title="X/Twitter">𝕏</a>
+            <a class="social-btn" href="#" title="YouTube">▶</a>
+            <a class="social-btn" href="#" title="Instagram">◉</a>
+            <a class="social-btn" href="#" title="LinkedIn">in</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-label" style="margin-bottom:18px" data-en="SEND A MESSAGE" data-ar="أرسل رسالة">SEND A MESSAGE</div>
+        <div class="form-group">
+          <label class="form-label" data-en="FULL NAME" data-ar="الاسم الكامل">FULL NAME</label>
+          <input class="form-ctrl" id="cName" type="text" placeholder="Ahmed Hassan" />
+        </div>
+        <div class="field-row" style="margin:14px 0">
+          <div class="form-group">
+            <label class="form-label" data-en="EMAIL" data-ar="البريد الإلكتروني">EMAIL</label>
+            <input class="form-ctrl" id="cEmail" type="email" placeholder="ahmed@example.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-en="SUBJECT" data-ar="الموضوع">SUBJECT</label>
+            <div class="sel-wrap">
+              <select class="form-ctrl" id="cSubject">
+                <option data-en="General Inquiry" data-ar="استفسار عام">General Inquiry</option>
+                <option data-en="Trip Planning" data-ar="تخطيط رحلة">Trip Planning</option>
+                <option data-en="Accessibility" data-ar="إمكانية الوصول">Accessibility</option>
+                <option data-en="Feedback" data-ar="تعليق">Feedback</option>
+                <option data-en="Media Inquiry" data-ar="استفسار إعلامي">Media Inquiry</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:16px">
+          <label class="form-label" data-en="MESSAGE" data-ar="الرسالة">MESSAGE</label>
+          <textarea class="form-ctrl" id="cMsg" rows="5" placeholder="Your message..." style="resize:vertical"></textarea>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="sendMsg()" data-en="Send Message ✉️" data-ar="أرسل الرسالة ✉️">Send Message ✉️</button>
+        <div class="err" id="cErr"></div>
+        <div class="form-success" id="cSuccess" data-en="✅ Message sent! We'll respond within 2 business days." data-ar="✅ تم إرسال رسالتك! سنرد خلال يومي عمل.">✅ Message sent! We'll respond within 2 business days.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT — DATA + LOGIC
+═══════════════════════════════════════════════════════ -->
+<script>
+/* ─── STATION DATA ─── */
+const ST = [
+  {id:0,  en:"Misr Station",       ar:"محطة مصر",          km:0.0,  el:false, lat:31.1991,lng:29.9057, fac:['♿','🚻','🅿️','🎟']},
+  {id:1,  en:"Sidi Gaber",         ar:"سيدي جابر",         km:1.4,  el:false, lat:31.2099,lng:29.9195, fac:['♿','🚻','🎟','🚌']},
+  {id:2,  en:"Sporting",           ar:"سبورتنج",           km:2.6,  el:false, lat:31.2166,lng:29.9351, fac:['♿','🚻','🎟']},
+  {id:3,  en:"Bab Sharq",          ar:"باب شرق",           km:3.5,  el:false, lat:31.2195,lng:29.9495, fac:['♿','🚻','🎟']},
+  {id:4,  en:"Al-Zahriya",         ar:"الزهرية",           km:4.4,  el:false, lat:31.2233,lng:29.9625, fac:['🚻','🎟']},
+  {id:5,  en:"Al-Ibrahimiya",      ar:"الإبراهيمية",       km:5.3,  el:false, lat:31.2261,lng:29.9740, fac:['🚻','🎟']},
+  {id:6,  en:"Kafr Abdo",          ar:"كفر عبده",          km:6.1,  el:true,  lat:31.2283,lng:29.9845, fac:['♿','🚻','🎟']},
+  {id:7,  en:"Victor Emanuel",     ar:"فيكتور إيمانويل",   km:6.9,  el:true,  lat:31.2301,lng:29.9938, fac:['🚻','🎟']},
+  {id:8,  en:"Touson",             ar:"طوسون",             km:7.7,  el:true,  lat:31.2319,lng:30.0028, fac:['🚻','🎟']},
+  {id:9,  en:"Glymenopoulo",       ar:"جليمنوبولو",        km:8.5,  el:true,  lat:31.2336,lng:30.0121, fac:['🚻','🎟']},
+  {id:10, en:"Gabriel",            ar:"جبريل",             km:9.4,  el:true,  lat:31.2354,lng:30.0219, fac:['♿','🚻','🎟']},
+  {id:11, en:"Mandara",            ar:"المندرة",           km:10.8, el:true,  lat:31.2372,lng:30.0356, fac:['♿','🚻','🎟','🛒']},
+  {id:12, en:"Asafra",             ar:"العصافرة",          km:12.1, el:true,  lat:31.2384,lng:30.0480, fac:['🚻','🎟']},
+  {id:13, en:"Abu Yousif",         ar:"أبو يوسف",          km:13.4, el:true,  lat:31.2395,lng:30.0595, fac:['🚻','🎟']},
+  {id:14, en:"Montaza",            ar:"المنتزه",           km:14.7, el:true,  lat:31.2405,lng:30.0709, fac:['♿','🚻','🎟','🚌','🛒']},
+  {id:15, en:"Al-Nakheel",         ar:"النخيل",            km:15.8, el:true,  lat:31.2411,lng:30.0812, fac:['🚻','🎟']},
+  {id:16, en:"Maamoura",           ar:"المعمورة",          km:16.9, el:true,  lat:31.2416,lng:30.0912, fac:['♿','🚻','🎟']},
+  {id:17, en:"Hannoville",         ar:"هانوفيل",           km:18.1, el:true,  lat:31.2421,lng:30.1023, fac:['🚻','🎟']},
+  {id:18, en:"New Abu Qir",        ar:"أبو قير الجديدة",   km:19.5, el:true,  lat:31.2427,lng:30.1145, fac:['♿','🚻','🎟']},
+  {id:19, en:"Abu Qir",            ar:"أبو قير",           km:21.7, el:true,  lat:31.2432,lng:30.1283, fac:['♿','🚻','🅿️','🎟','🚌']},
+];
+
+/* ─── BFS ─── */
+function buildGraph(){
+  const g={};
+  ST.forEach(s=>{g[s.id]=[]});
+  for(let i=0;i<ST.length-1;i++){g[i].push(i+1);g[i+1].push(i)}
+  return g;
+}
+const G=buildGraph();
+function bfs(s,e){
+  if(s===e)return[s];
+  const q=[[s]],vis=new Set([s]);
+  while(q.length){
+    const p=q.shift(),n=p[p.length-1];
+    for(const nb of G[n]){
+      if(!vis.has(nb)){
+        const np=[...p,nb];
+        if(nb===e)return np;
+        vis.add(nb);q.push(np);
+      }
+    }
+  }
+  return null;
+}
+
+/* ─── FARE LOGIC ─── */
+function calcFareAmt(stops){
+  const base=5;const perStop=3;
+  return base+Math.max(0,stops-1)*perStop;
+}
+
+/* ─── HAVERSINE ─── */
+function hav(la1,lo1,la2,lo2){
+  const R=6371,dLat=(la2-la1)*Math.PI/180,dLng=(lo2-lo1)*Math.PI/180;
+  const a=Math.sin(dLat/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+/* ─── LANGUAGE ─── */
+let LANG='en';
+let nearestId=null;
+
+function toggleLang(){
+  LANG=LANG==='en'?'ar':'en';
+  applyLang();
+}
+function applyLang(){
+  const ar=LANG==='ar';
+  document.documentElement.lang=ar?'ar':'en';
+  document.documentElement.dir=ar?'rtl':'ltr';
+  document.getElementById('lang-btn').textContent=ar?'English':'عربي';
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA'){
+      el.placeholder=el.dataset[LANG]||el.dataset.en;
+    } else {
+      el.textContent=el.dataset[LANG]||el.dataset.en;
+    }
+  });
+  // Update search placeholder
+  const ss=document.getElementById('stSearch');
+  if(ss)ss.placeholder=ar?'ابحث عن محطة...':'Search stations...';
+  populateSels();
+  buildHeroMini();
+  buildMapSvg();
+  buildStations();
+  renderNewsHome();
+  renderFullNews();
+  buildTT();
+  buildMilestones();
+  buildPhaseCards();
+  renderTicker();
+}
+function sn(s){return LANG==='ar'?s.ar:s.en}
+
+/* ─── SELECTS ─── */
+function populateSels(){
+  const ph=LANG==='ar'?'اختر محطة...':'Select station...';
+  ['selFrom','selTo','fFrom','fTo'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    const v=el.value;
+    el.innerHTML=`<option value="">${ph}</option>`;
+    ST.forEach(s=>{
+      const o=document.createElement('option');
+      o.value=s.id;o.textContent=sn(s);
+      el.appendChild(o);
+    });
+    if(v!=='')el.value=v;
+  });
+}
+
+/* ─── NAV ─── */
+function nav(id,linkEl){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a,.mob-menu a').forEach(a=>a.classList.remove('active'));
+  if(linkEl){
+    const en=linkEl.dataset.en;
+    document.querySelectorAll('.nav-links a,.mob-menu a').forEach(a=>{if(a.dataset.en===en)a.classList.add('active')});
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+  // lazy build map
+  if(id==='map')buildMapSvg();
+}
+function toggleMob(){document.getElementById('mobMenu').classList.toggle('open')}
+
+/* ─── HERO MINI STATIONS ─── */
+function buildHeroMini(){
+  const el=document.getElementById('heroMiniStations');
+  if(!el)return;
+  const show=[0,4,8,12,16,19];
+  el.innerHTML='';
+  show.forEach(i=>{
+    const s=ST[i];
+    const d=document.createElement('div');
+    d.className='mini-st'+(i===0||i===19?' terminal':'');
+    d.innerHTML=`<div class="mini-dot"></div><div class="mini-label">${sn(s)}</div>`;
+    el.appendChild(d);
+  });
+}
+
+/* ─── TICKER ─── */
+function renderTicker(){
+  const items=LANG==='ar'?[
+    '🚉 بدأت أعمال الجسور المرتفعة في المحطات 7-12 · ',
+    '🚄 وصلت أول دفعة من القطارات من مصنع نيريك · ',
+    '⚡ اكتملت 9 من 13 تقاطعات خرسانية · ',
+    '📅 الافتتاح المستهدف: الربع الثالث 2026 · ',
+    '🏗 وصلت نسبة الأعمال المدنية إلى 82% · ',
+  ]:[
+    '🚉 Elevated bridge works complete at stations 7–12 · ',
+    '🚄 First batch of NERIC trains delivered to depot · ',
+    '⚡ 9 of 13 concrete crossings finished · ',
+    '📅 Target opening: Q3 2026 · ',
+    '🏗 Civil works reach 82% completion · ',
+  ];
+  const txt=items.join('');
+  const el=document.getElementById('tickerInner');
+  if(el)el.textContent=txt+txt;
+}
+
+/* ─── TIMETABLE ─── */
+const TT_DATA={
+  weekday:{
+    outbound:[
+      {station:'Misr Station',ar:'محطة مصر',first:'05:00',last:'23:30'},
+      {station:'Sidi Gaber',ar:'سيدي جابر',first:'05:05',last:'23:35'},
+      {station:'Sporting',ar:'سبورتنج',first:'05:09',last:'23:39'},
+      {station:'Kafr Abdo',ar:'كفر عبده',first:'05:14',last:'23:44'},
+      {station:'Montaza',ar:'المنتزه',first:'05:27',last:'23:57'},
+      {station:'Abu Qir',ar:'أبو قير',first:'05:35',last:'00:05'},
+    ],
+    inbound:[
+      {station:'Abu Qir',ar:'أبو قير',first:'05:00',last:'23:30'},
+      {station:'Montaza',ar:'المنتزه',first:'05:08',last:'23:38'},
+      {station:'Kafr Abdo',ar:'كفر عبده',first:'05:21',last:'23:51'},
+      {station:'Sporting',ar:'سبورتنج',first:'05:26',last:'23:56'},
+      {station:'Sidi Gaber',ar:'سيدي جابر',first:'05:30',last:'00:00'},
+      {station:'Misr Station',ar:'محطة مصر',first:'05:35',last:'00:05'},
+    ]
+  },
+  friday:{
+    outbound:[
+      {station:'Misr Station',ar:'محطة مصر',first:'06:00',last:'23:00'},
+      {station:'Sidi Gaber',ar:'سيدي جابر',first:'06:05',last:'23:05'},
+      {station:'Montaza',ar:'المنتزه',first:'06:27',last:'23:27'},
+      {station:'Abu Qir',ar:'أبو قير',first:'06:35',last:'23:35'},
+    ],
+    inbound:[
+      {station:'Abu Qir',ar:'أبو قير',first:'06:00',last:'23:00'},
+      {station:'Montaza',ar:'المنتزه',first:'06:08',last:'23:08'},
+      {station:'Sidi Gaber',ar:'سيدي جابر',first:'06:30',last:'23:30'},
+      {station:'Misr Station',ar:'محطة مصر',first:'06:35',last:'23:35'},
+    ]
+  },
+  weekend:{
+    outbound:[
+      {station:'Misr Station',ar:'محطة مصر',first:'07:00',last:'22:00'},
+      {station:'Sidi Gaber',ar:'سيدي جابر',first:'07:05',last:'22:05'},
+      {station:'Montaza',ar:'المنتزه',first:'07:27',last:'22:27'},
+      {station:'Abu Qir',ar:'أبو قير',first:'07:35',last:'22:35'},
+    ],
+    inbound:[
+      {station:'Abu Qir',ar:'أبو قير',first:'07:00',last:'22:00'},
+      {station:'Montaza',ar:'المنتزه',first:'07:08',last:'22:08'},
+      {station:'Sidi Gaber',ar:'سيدي جابر',first:'07:30',last:'22:30'},
+      {station:'Misr Station',ar:'محطة مصر',first:'07:35',last:'22:35'},
+    ]
+  }
+};
+let currentTT='weekday';
+function showTT(key,btn){
+  currentTT=key;
+  document.querySelectorAll('.tt-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildTT();
+}
+function buildTT(){
+  const data=TT_DATA[currentTT];
+  const el=document.getElementById('ttGrid');
+  if(!el)return;
+  const dirs=[
+    {key:'outbound',label_en:'→ Towards Abu Qir',label_ar:'← نحو أبو قير',icon:'🚄'},
+    {key:'inbound',label_en:'← Towards Misr',label_ar:'→ نحو محطة مصر',icon:'🚄'},
+  ];
+  el.innerHTML=dirs.map(d=>`
+    <div class="tt-card">
+      <div class="tt-card-head">
+        <span class="tt-dir-icon">${d.icon}</span>
+        <div class="tt-dir-label">${LANG==='ar'?d.label_ar:d.label_en}</div>
+      </div>
+      <table class="tt-table">
+        <thead><tr>
+          <th data-en="Station" data-ar="المحطة">${LANG==='ar'?'المحطة':'Station'}</th>
+          <th data-en="First Train" data-ar="أول قطار">${LANG==='ar'?'أول قطار':'First Train'}</th>
+          <th data-en="Last Train" data-ar="آخر قطار">${LANG==='ar'?'آخر قطار':'Last Train'}</th>
+        </tr></thead>
+        <tbody>${data[d.key].map(r=>`
+          <tr>
+            <td>${LANG==='ar'?r.ar:r.station}</td>
+            <td><span class="tt-time">${r.first}</span></td>
+            <td><span class="tt-time">${r.last}</span></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`).join('');
+}
+
+/* ─── MILESTONES ─── */
+const MILESTONES=[
+  {status:'done', en:'Contract Awarded',ar:'تم منح العقد', date:'Nov 2023', desc_en:'Orascom Construction–Colas Rail consortium awarded the $1.5B EPC contract.',desc_ar:'تم منح عقد EPC بقيمة 1.5 مليار دولار لتحالف أوراسكوم–كولاس رايل.'},
+  {status:'done', en:'Site Clearance',ar:'تطهير الموقع', date:'Jan 2024', desc_en:'Existing tracks, station buildings removed. Surveying and soil testing complete.',desc_ar:'تمت إزالة المسارات والمباني. اكتمل المسح واختبار التربة.'},
+  {status:'done', en:'Civil Works Begin',ar:'بدء الأعمال المدنية', date:'Mar 2024', desc_en:'Pile driving and foundation works started across all 13 level crossings.',desc_ar:'بدأت أعمال الخوازيق والأساسات في جميع التقاطعات الـ13.'},
+  {status:'done', en:'Train Contract Signed',ar:'توقيع عقد القطارات', date:'May 2025', desc_en:'NERIC signs €275M agreement to build 21 trains (189 railcars) in East Port Said.',desc_ar:'توقع NERIC عقداً بقيمة 275 مليون يورو لبناء 21 قطاراً في بور سعيد الشرقية.'},
+  {status:'active',en:'Elevated Viaducts',ar:'الجسور المرتفعة', date:'2025–2026', desc_en:'Steel beams being installed for 15.2 km of elevated track between stations 6–19.',desc_ar:'يجري تركيب الكمرات الفولاذية لـ15.2 كم من المسار المرتفع بين المحطات 6-19.'},
+  {status:'pending',en:'Station Fit-Out',ar:'تجهيز المحطات', date:'2026', desc_en:'Architectural finishes, signage, ticketing systems, and accessibility infrastructure.',desc_ar:'التشطيبات المعمارية، اللافتات، أنظمة التذاكر، وبنية الوصول.'},
+  {status:'pending',en:'Systems Installation',ar:'تركيب الأنظمة', date:'2026', desc_en:'Overhead catenary, signalling, communications, and platform screen doors.',desc_ar:'نظام الكهرباء العلوي، الإشارات، الاتصالات، وأبواب رصيف المحطة.'},
+  {status:'pending',en:'Testing & Commissioning',ar:'الاختبار والتشغيل', date:'Mid 2026', desc_en:'Trial runs, safety certification, staff training before passenger service.',desc_ar:'رحلات تجريبية، اعتماد السلامة، تدريب الموظفين قبل الخدمة.'},
+  {status:'pending',en:'Commercial Opening',ar:'الافتتاح التجاري', date:'Q3 2026', desc_en:'First passengers board the Alexandria Metro Line 1.',desc_ar:'أول ركاب يصعدون مترو الإسكندرية الخط الأول.'},
+];
+function buildMilestones(){
+  const el=document.getElementById('milestoneList');
+  if(!el)return;
+  el.innerHTML=MILESTONES.map(m=>`
+    <div class="ms-item">
+      <div class="ms-dot ${m.status}">${m.status==='done'?'✓':m.status==='active'?'●':'○'}</div>
+      <div class="ms-body">
+        <div class="ms-name">${LANG==='ar'?m.ar:m.en}</div>
+        <div class="ms-date">${m.date}</div>
+        <div class="ms-desc">${LANG==='ar'?m.desc_ar:m.desc_en}</div>
+      </div>
+    </div>`).join('');
+}
+
+/* ─── PHASE CARDS ─── */
+const PHASES=[
+  {num:1,en:'Abu Qir → Misr Station',ar:'أبو قير ← محطة مصر',km:'21.7 km',stations:20,status:'active',status_en:'Under Construction',status_ar:'قيد الإنشاء'},
+  {num:2,en:'Misr Station → El Max',ar:'محطة مصر ← الماكس',km:'8 km',stations:8,status:'pending',status_en:'Planned',status_ar:'مخطط'},
+  {num:3,en:'El Max → Borg El Arab',ar:'الماكس ← برج العرب',km:'15.5 km',stations:12,status:'pending',status_en:'Future',status_ar:'مستقبلي'},
+];
+function buildPhaseCards(){
+  const el=document.getElementById('phaseCards');
+  if(!el)return;
+  el.innerHTML=PHASES.map(p=>`
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-family:var(--fm);font-size:22px;font-weight:900;color:var(--cyan)">P${p.num}</div>
+        <span class="pill ${p.status==='active'?'pill-green':'pill-gold'}" style="font-size:9px">${LANG==='ar'?p.status_ar:p.status_en}</span>
+      </div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:8px;${LANG==='ar'?'font-family:var(--far)':''}">${LANG==='ar'?p.ar:p.en}</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span style="font-family:var(--fm);font-size:10px;color:var(--text3)">${p.km}</span>
+        <span style="font-family:var(--fm);font-size:10px;color:var(--text3)">${p.stations} ${LANG==='ar'?'محطة':'stations'}</span>
+      </div>
+    </div>`).join('');
+}
+
+/* ─── NEWS DATA ─── */
+const NEWS=[
+  {icon:'🚄',tag_en:'CONTRACT',tag_ar:'عقد',date:'May 2025',title_en:'NERIC Signs €275M Train Manufacturing Deal',title_ar:'نيريك توقع صفقة تصنيع قطارات بقيمة 275 مليون يورو',text_en:'Egypt\'s National Railway Industries Company (NERIC) signed an agreement to manufacture 21 trains (189 railcars) for the Alexandria Metro, all built in East Port Said.',text_ar:'وقّعت شركة نيريك اتفاقية لتصنيع 21 قطاراً (189 عربة) لمترو الإسكندرية، يتم بناؤها جميعاً في بور سعيد الشرقية.'},
+  {icon:'🏗',tag_en:'CONSTRUCTION',tag_ar:'إنشاء',date:'Feb 2025',title_en:'Civil Works Reach 82% Completion',title_ar:'الأعمال المدنية تبلغ 82% من الاكتمال',text_en:'Ministers Al-Wazir and Al-Mashat reviewed progress, confirming civil works are 82% complete and on track for the 2026 opening.',text_ar:'راجع الوزيران الوضع وأكدا أن الأعمال المدنية اكتملت بنسبة 82% وهي في مسارها للافتتاح عام 2026.'},
+  {icon:'💰',tag_en:'FINANCING',tag_ar:'تمويل',date:'Apr 2024',title_en:'EIB and EBRD Confirm €900M Financing Package',title_ar:'بنك الاستثمار الأوروبي يؤكد حزمة تمويل بـ900 مليون يورو',text_en:'The European Investment Bank, EBRD, AFD, and AIIB confirmed their joint financing arrangement for Phase 1 of the Alexandria Metro.',text_ar:'أكدت البنوك الأوروبية والآسيوية ترتيب التمويل المشترك للمرحلة الأولى من مترو الإسكندرية.'},
+  {icon:'⚡',tag_en:'ENVIRONMENT',tag_ar:'بيئة',date:'Mar 2024',title_en:'Metro to Cut 60,000 Tonnes CO₂ Annually',title_ar:'المترو سيخفض 60,000 طن من CO₂ سنوياً',text_en:'Environmental impact assessment confirms the metro will significantly reduce Alexandria\'s carbon footprint and eliminate 13 dangerous level crossings.',text_ar:'يؤكد تقييم الأثر البيئي أن المترو سيخفض البصمة الكربونية بشكل كبير ويزيل 13 تقاطعاً خطيراً.'},
+  {icon:'🚉',tag_en:'STATIONS',tag_ar:'محطات',date:'Jan 2024',title_en:'Station Architecture Concepts Revealed',title_ar:'الكشف عن تصاميم معمارية للمحطات',text_en:'NAT released initial architectural renders for key stations including Montaza, Mandara and Abu Qir terminal, showcasing the elevated design language.',text_ar:'كشفت هيئة الأنفاق عن تصاميم أولية للمحطات الرئيسية بما فيها المنتزه والمندرة ومحطة أبو قير.'},
+  {icon:'🎓',tag_en:'WORKFORCE',tag_ar:'قوى عاملة',date:'Dec 2023',title_en:'5,000 Jobs Created During Construction Phase',title_ar:'5000 وظيفة تم إنشاؤها خلال مرحلة الإنشاء',text_en:'The Alexandria Metro project has directly created over 5,000 construction jobs, with 3,200 positions going to local Alexandrian workers.',text_ar:'أوجد مشروع مترو الإسكندرية أكثر من 5000 وظيفة في الإنشاء، ذهب 3200 منها لعمال محليين من الإسكندرية.'},
+];
+function renderNewsHome(){
+  const el=document.getElementById('homeNewsGrid');
+  if(!el)return;
+  const items=NEWS.slice(0,3);
+  el.innerHTML=items.map((n,i)=>`
+    <div class="news-card ${i===0?'featured':''}" onclick="nav('news')">
+      <div class="news-img">${n.icon}</div>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="news-tag">${LANG==='ar'?n.tag_ar:n.tag_en}</span>
+          <span class="news-date">${n.date}</span>
+        </div>
+        <div class="news-title">${LANG==='ar'?n.title_ar:n.title_en}</div>
+        ${i===0?`<div class="news-excerpt">${LANG==='ar'?n.text_ar:n.text_en}</div>`:''}
+      </div>
+    </div>`).join('');
+}
+function renderFullNews(){
+  const el=document.getElementById('fullNewsGrid');
+  if(!el)return;
+  el.innerHTML=NEWS.map(n=>`
+    <div class="full-news-card">
+      <div class="fnc-img">${n.icon}</div>
+      <div class="fnc-body">
+        <div class="news-meta">
+          <span class="news-tag">${LANG==='ar'?n.tag_ar:n.tag_en}</span>
+          <span class="news-date">${n.date}</span>
+        </div>
+        <div class="fnc-title">${LANG==='ar'?n.title_ar:n.title_en}</div>
+        <div class="fnc-text">${LANG==='ar'?n.text_ar:n.text_en}</div>
+      </div>
+    </div>`).join('');
+}
+
+/* ─── STATIONS GRID ─── */
+let stFilter='all';
+function buildStations(filter,search){
+  filter=filter||stFilter;
+  search=search||(document.getElementById('stSearch')||{}).value||'';
+  const el=document.getElementById('stationsGrid');
+  if(!el)return;
+  const filtered=ST.filter(s=>{
+    if(filter==='ground'&&s.el)return false;
+    if(filter==='elevated'&&!s.el)return false;
+    const q=search.toLowerCase();
+    if(q&&!s.en.toLowerCase().includes(q)&&!s.ar.includes(q))return false;
+    return true;
+  });
+  if(!filtered.length){el.innerHTML=`<div style="color:var(--text3);font-size:14px;padding:16px">${LANG==='ar'?'لا توجد محطات':'No stations found'}</div>`;return}
+  el.innerHTML=filtered.map(s=>{
+    const isT=s.id===0||s.id===19;
+    return`<div class="st-card" onclick="nav('planner')">
+      <div class="st-card-top">
+        <div>
+          <div class="st-name">${LANG==='ar'?s.ar:s.en}</div>
+          <div class="st-name-ar">${LANG==='ar'?s.en:s.ar}</div>
+        </div>
+        <span class="st-num">S${String(s.id+1).padStart(2,'0')}</span>
+      </div>
+      <div class="st-tags">
+        ${isT?`<span class="st-tag st-tag-term">${LANG==='ar'?'طرفية':'TERMINAL'}</span>`:''}
+        <span class="st-tag ${s.el?'st-tag-el':'st-tag-gr'}">${s.el?(LANG==='ar'?'مرتفعة':'ELEVATED'):(LANG==='ar'?'أرضية':'GROUND')}</span>
+      </div>
+      <div class="st-facilities">${s.fac.map(f=>`<span class="fac-icon" title="${f}">${f}</span>`).join('')}</div>
+      <div class="st-km">${s.km} km ${LANG==='ar'?'من محطة مصر':'from Misr Station'}</div>
+    </div>`;
+  }).join('');
+}
+function filterSt(f,btn){
+  stFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildStations(f);
+}
+function searchSt(q){buildStations(stFilter,q)}
+
+/* ─── MAP SVG ─── */
+function buildMapSvg(){
+  const wrap=document.getElementById('mapSvgWrap');
+  if(!wrap)return;
+  const W=Math.max(1000,ST.length*58+60);
+  const H=320;
+  const sX=40,eX=W-40,lY=160;
+  const sp=(eX-sX)/(ST.length-1);
+  let svg=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:${W}px;height:${H}px;display:block">
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1a6bff"/><stop offset="100%" stop-color="#00d4ff"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="${W}" height="${H}" fill="transparent"/>
+  <line x1="${sX}" y1="${lY}" x2="${eX}" y2="${lY}" stroke="url(#lg)" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+  `;
+  ST.forEach((s,i)=>{
+    const x=sX+i*sp;
+    const even=i%2===0;
+    const lbY=even?lY-40:lY+52;
+    const r=s.id===0||s.id===19?12:s.el?7:8;
+    const fill=s.id===0||s.id===19?'#00d4ff':s.el?'rgba(26,107,255,.25)':'#04080f';
+    const stroke=s.el?'#3d8bff':'#00d4ff';
+    const label=sn(s);
+    const words=label.split(' ');
+    const lines=[];
+    let cur='';
+    words.forEach(w=>{if((cur+w).length>12&&cur){lines.push(cur.trim());cur=w+' '}else cur+=w+' '});
+    if(cur.trim())lines.push(cur.trim());
+    svg+=`
+      <line x1="${x}" y1="${lY+(even?-r:r)}" x2="${x}" y2="${lbY+(even?12:-12)}" stroke="${stroke}" stroke-width="1" opacity=".3"/>
+      <circle cx="${x}" cy="${lY}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="2.5" filter="url(#glow)"/>
+      ${s.id===0||s.id===19?`<circle cx="${x}" cy="${lY}" r="${r+5}" fill="none" stroke="${stroke}" stroke-width="1" opacity=".3"/>`:''}
+      ${lines.map((l,li)=>`<text x="${x}" y="${lbY+(even?li*13:li*13)}" text-anchor="middle" font-size="10" fill="#6b7fa3" font-family="${LANG==='ar'?'Cairo,sans-serif':'Barlow,sans-serif'}" font-weight="600">${l}</text>`).join('')}
+      <text x="${x}" y="${lY+(even?-r-8:r+16)}" text-anchor="middle" font-size="8" fill="#3d5270" font-family="JetBrains Mono,monospace">${s.km}km</text>
+    `;
+  });
+  svg+='</svg>';
+  wrap.innerHTML=svg;
+}
+
+/* ─── PLANNER ─── */
+function swapSt(){
+  const f=document.getElementById('selFrom'),t=document.getElementById('selTo');
+  [f.value,t.value]=[t.value,f.value];
+}
+function planRoute(){
+  const fv=document.getElementById('selFrom').value;
+  const tv=document.getElementById('selTo').value;
+  const err=document.getElementById('routeErr');
+  err.classList.remove('show');
+  if(!fv||!tv){
+    err.textContent=LANG==='ar'?'يرجى اختيار محطتي البداية والنهاية.':'Please select both start and destination stations.';
+    err.classList.add('show');return;
+  }
+  if(fv===tv){
+    err.textContent=LANG==='ar'?'محطة البداية والنهاية متطابقتان!':'Start and destination are the same!';
+    err.classList.add('show');return;
+  }
+  const path=bfs(parseInt(fv),parseInt(tv));
+  if(!path){
+    err.textContent=LANG==='ar'?'لم يتم العثور على مسار.':'No route found.';
+    err.classList.add('show');return;
+  }
+  const fS=ST[parseInt(fv)],tS=ST[parseInt(tv)];
+  const stops=path.length-1;
+  const distKm=Math.abs(tS.km-fS.km).toFixed(1);
+  const mins=Math.round(stops*2.5+(stops)*0.5);
+  const fare=calcFareAmt(stops);
+  document.getElementById('routeName').textContent=
+    LANG==='ar'?`${sn(fS)} ← ${sn(tS)}`:`${sn(fS)} → ${sn(tS)}`;
+  document.getElementById('routeChips').innerHTML=`
+    <span class="chip">${stops} ${LANG==='ar'?'محطة':'stop'+(stops!==1?'s':'')}</span>
+    <span class="chip">${distKm} km</span>
+    <span class="chip">~${mins} ${LANG==='ar'?'دقيقة':'min'}</span>
+    <span class="chip">${LANG==='ar'?'من':'from'} ${fare} ${LANG==='ar'?'جنيه':'EGP'}</span>
+  `;
+  const list=document.getElementById('pathList');
+  list.innerHTML='';
+  path.forEach((stId,idx)=>{
+    const s=ST[stId];
+    const isStart=idx===0,isEnd=idx===path.length-1;
+    const hint=isStart?(LANG==='ar'?'نقطة البداية':'Departure'):isEnd?(LANG==='ar'?'الوجهة':'Destination'):(s.el?(LANG==='ar'?'محطة مرتفعة':'Elevated'):(LANG==='ar'?'أرضية':'Ground level'));
+    const d=document.createElement('div');
+    d.className=`path-stop${isStart?' start':''}${isEnd?' end':''}`;
+    d.innerHTML=`<div class="ps-track"><div class="ps-dot"></div><div class="ps-line"></div></div><div class="ps-info"><div class="ps-name">${sn(s)}</div><div class="ps-hint">${hint}</div></div>`;
+    list.appendChild(d);
+  });
+  // Fare preview
+  document.getElementById('fareS').textContent=fare;
+  document.getElementById('fareR').textContent=Math.round(fare*1.8);
+  document.getElementById('routeFarePreview').style.display='block';
+  document.getElementById('resultEmpty').style.display='none';
+  document.getElementById('resultBox').classList.add('show');
+  document.getElementById('resultBox').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ─── NEAREST STATION ─── */
+function findNearest(){
+  const spin=document.getElementById('locSpinner');
+  const errEl=document.getElementById('locErr');
+  errEl.classList.remove('show');
+  spin.classList.add('on');
+  if(!navigator.geolocation){
+    spin.classList.remove('on');
+    errEl.textContent=LANG==='ar'?'المتصفح لا يدعم تحديد الموقع':'Geolocation not supported.';
+    errEl.classList.add('show');return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      spin.classList.remove('on');
+      const {latitude:la,longitude:lo}=pos.coords;
+      let min=Infinity,near=null;
+      ST.forEach(s=>{const d=hav(la,lo,s.lat,s.lng);if(d<min){min=d;near=s}});
+      nearestId=near.id;
+      document.getElementById('nfName').textContent=sn(near);
+      document.getElementById('nfDist').textContent=min<1
+        ?`${Math.round(min*1000)} ${LANG==='ar'?'متر بعيد':'m away'}`
+        :`${min.toFixed(1)} ${LANG==='ar'?'كم':'km away'}`;
+      document.getElementById('nearestFound').classList.add('show');
+    },
+    err=>{
+      spin.classList.remove('on');
+      const msgs={1:{en:'Location permission denied.',ar:'تم رفض إذن الموقع.'},2:{en:'Location unavailable.',ar:'الموقع غير متاح.'},3:{en:'Request timed out.',ar:'انتهت المهلة.'}};
+      const m=msgs[err.code]||{en:'Could not get location.',ar:'تعذر الحصول على الموقع.'};
+      errEl.textContent=m[LANG];errEl.classList.add('show');
+    },
+    {timeout:8000,maximumAge:60000,enableHighAccuracy:true}
+  );
+}
+function useNearest(){
+  if(nearestId===null)return;
+  document.getElementById('selFrom').value=nearestId;
+  document.getElementById('selFrom').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ─── FARE CALCULATOR ─── */
+function calcFare(){
+  const f=document.getElementById('fFrom').value;
+  const t=document.getElementById('fTo').value;
+  const err=document.getElementById('fareErr');
+  err.classList.remove('show');
+  if(!f||!t){
+    err.textContent=LANG==='ar'?'يرجى اختيار المحطتين.':'Please select both stations.';
+    err.classList.add('show');return;
+  }
+  if(f===t){
+    err.textContent=LANG==='ar'?'المحطتان متطابقتان!':'Same station selected!';
+    err.classList.add('show');return;
+  }
+  const path=bfs(parseInt(f),parseInt(t));
+  const stops=path.length-1;
+  const s=calcFareAmt(stops);
+  const r=Math.round(s*1.8);
+  const b=Math.round(s*10*0.8);
+  document.getElementById('fp1').textContent=s;
+  document.getElementById('fp2').textContent=r;
+  document.getElementById('fp3').textContent=b;
+  document.getElementById('fp2s').textContent=LANG==='ar'?`وفر ${Math.round(s*2-r)} جنيه (10%)`:`Save ${Math.round(s*2-r)} EGP (10%)`;
+  document.getElementById('fp3s').textContent=LANG==='ar'?`وفر ${s*10-b} جنيه (20%)`:`Save ${s*10-b} EGP (20%)`;
+  document.getElementById('fareResultRow').style.display='grid';
+  document.getElementById('fareNote').style.display='block';
+}
+
+/* ─── CONTACT FORM ─── */
+function sendMsg(){
+  const name=document.getElementById('cName').value.trim();
+  const email=document.getElementById('cEmail').value.trim();
+  const msg=document.getElementById('cMsg').value.trim();
+  const err=document.getElementById('cErr');
+  err.classList.remove('show');
+  if(!name||!email||!msg){
+    err.textContent=LANG==='ar'?'يرجى ملء جميع الحقول المطلوبة.':'Please fill in all required fields.';
+    err.classList.add('show');return;
+  }
+  if(!email.includes('@')){
+    err.textContent=LANG==='ar'?'يرجى إدخال بريد إلكتروني صحيح.':'Please enter a valid email.';
+    err.classList.add('show');return;
+  }
+  // Simulated success
+  document.getElementById('cSuccess').classList.add('show');
+  document.getElementById('cName').value='';
+  document.getElementById('cEmail').value='';
+  document.getElementById('cMsg').value='';
+  setTimeout(()=>document.getElementById('cSuccess').classList.remove('show'),5000);
+}
+
+/* ─── INIT ─── */
+document.addEventListener('DOMContentLoaded',()=>{
+  populateSels();
+  buildHeroMini();
+  renderTicker();
+  buildTT();
+  buildStations();
+  buildMilestones();
+  buildPhaseCards();
+  renderNewsHome();
+  renderFullNews();
+  // Prevent default anchor
+  document.querySelectorAll('.nav-links a,.mob-menu a,.nav-brand,a[onclick]').forEach(a=>{
+    if(a.hasAttribute('onclick'))a.addEventListener('click',e=>e.preventDefault());
+  });
+});
+</script>
+</body>
+</html>
